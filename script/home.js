@@ -1,4 +1,4 @@
- // Mobile Menu Toggle
+// Mobile Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileClose = document.getElementById('mobileClose');
@@ -22,18 +22,33 @@
             document.body.style.overflow = 'auto';
         });
         
-        // Mobile Dropdown Toggle
+        // Mobile Dropdown Toggle - FIXED VERSION
         const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
         
         mobileDropdownToggles.forEach(toggle => {
             toggle.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation(); // Prevent the event from bubbling up
+                
                 const dropdown = toggle.nextElementSibling;
                 dropdown.classList.toggle('active');
                 
                 const icon = toggle.querySelector('.dropdown-icon');
                 icon.classList.toggle('fa-chevron-down');
                 icon.classList.toggle('fa-chevron-up');
+            });
+        });
+        
+        // Close mobile menu when clicking on actual content links
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Only close menu if it's not a dropdown toggle
+                if (!link.classList.contains('mobile-dropdown-toggle')) {
+                    mobileMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
             });
         });
         
