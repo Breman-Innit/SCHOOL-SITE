@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables */
+        /* CSS Variables for Light/Dark Mode */
         :root {
             --primary: #1a4b8c;
             --secondary: #f8b739;
@@ -15,8 +15,29 @@
             --light: #f5f5f5;
             --dark: #333;
             --white: #ffffff;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #1a1a1a;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Variables */
+        .dark-mode {
+            --primary: #3a7bd5;
+            --secondary: #ffc145;
+            --accent: #4caf50;
+            --light: #2d2d2d;
+            --dark: #f0f0f0;
+            --white: #121212;
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
+            --header-bg: rgba(30, 30, 30, 0.95);
+            --footer-bg: #0a0a0a;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         /* Reset and Base Styles */
@@ -33,9 +54,10 @@
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--white);
+            color: var(--text-color);
+            background-color: var(--bg-color);
             overflow-x: hidden;
+            transition: var(--transition);
         }
 
         a {
@@ -86,7 +108,7 @@
 
         .btn-secondary:hover {
             background-color: transparent;
-            color: var(--dark);
+            color: var(--secondary);
         }
 
         .section-title {
@@ -108,7 +130,8 @@
 
         .section-subtitle {
             font-size: 1.1rem;
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
             margin-bottom: 3rem;
             max-width: 600px;
         }
@@ -120,13 +143,13 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: var(--header-bg);
             box-shadow: var(--shadow);
             transition: var(--transition);
         }
 
         header.scrolled {
-            background-color: var(--white);
+            background-color: var(--header-bg);
             padding: 10px 0;
         }
 
@@ -156,19 +179,23 @@
 
         .nav-links {
             display: flex;
+            align-items: center;
         }
 
         .nav-links li {
-            margin-left: 2rem;
+            position: relative;
+            margin-left: 1.5rem;
         }
 
-        .nav-links a {
+        .nav-links > li > a {
             font-weight: 500;
             position: relative;
             padding: 5px 0;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-links a::after {
+        .nav-links > li > a::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -179,7 +206,7 @@
             transition: var(--transition);
         }
 
-        .nav-links a:hover::after {
+        .nav-links > li > a:hover::after {
             width: 100%;
         }
 
@@ -187,16 +214,78 @@
             width: 100%;
         }
 
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 220px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .dropdown li {
+            margin: 0;
+            width: 100%;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .dropdown a:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .nav-links li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-icon {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .nav-links li:hover .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            cursor: pointer;
+            margin-left: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+        }
+
         .hamburger {
             display: none;
             cursor: pointer;
             font-size: 1.5rem;
+            color: var(--text-color);
         }
 
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(26, 75, 140, 0.8), rgba(26, 75, 140, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
             display: flex;
             align-items: center;
             color: var(--white);
@@ -248,7 +337,7 @@
         }
 
         .feature-card {
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 30px;
             box-shadow: var(--shadow);
@@ -315,7 +404,8 @@
 
         .stat-label {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
         }
 
         /* Programs Section */
@@ -332,7 +422,7 @@
         }
 
         .program-card {
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -380,7 +470,7 @@
         }
 
         .testimonial {
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 30px;
             box-shadow: var(--shadow);
@@ -425,7 +515,8 @@
 
         .author-info p {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
         }
 
         .slider-controls {
@@ -462,7 +553,7 @@
         }
 
         .event-card {
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -502,7 +593,8 @@
         .event-meta {
             display: flex;
             margin-top: 15px;
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
             font-size: 0.9rem;
         }
 
@@ -518,7 +610,7 @@
         /* CTA Section */
         .cta {
             padding: 100px 0;
-            background: linear-gradient(rgba(26, 75, 140, 0.9), rgba(26, 75, 140, 0.9)), url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
             color: var(--white);
             text-align: center;
         }
@@ -538,7 +630,7 @@
 
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background-color: var(--footer-bg);
             color: var(--white);
             padding: 80px 0 20px;
         }
@@ -629,6 +721,92 @@
             transform: translateY(0);
         }
 
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--card-bg);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: var(--transition);
+            overflow-y: auto;
+            padding: 80px 20px 20px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .nav-links {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .mobile-menu .nav-links li {
+            margin: 0;
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu .nav-links > li > a {
+            padding: 15px 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu .dropdown {
+            position: static;
+            width: 100%;
+            box-shadow: none;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 0;
+        }
+
+        .mobile-menu .dropdown.active {
+            display: block;
+        }
+
+        .mobile-menu .dropdown a {
+            padding: 12px 15px;
+            padding-left: 30px;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .about-content {
@@ -642,37 +820,19 @@
             .hero h1 {
                 font-size: 2.8rem;
             }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
         }
 
         @media (max-width: 768px) {
             .navbar {
                 padding: 15px 0;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background-color: var(--white);
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding-top: 50px;
-                transition: var(--transition);
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
-            }
-            
-            .hamburger {
-                display: block;
             }
             
             .hero h1 {
@@ -711,6 +871,10 @@
             .cta h2 {
                 font-size: 2rem;
             }
+
+            .mobile-menu {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -725,18 +889,116 @@
                 </a>
                 <ul class="nav-links">
                     <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#programs">Programs</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li>
+                        <a href="#about">About <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Our History</a></li>
+                            <li><a href="#">Mission & Vision</a></li>
+                            <li><a href="#">Leadership</a></li>
+                            <li><a href="#">Faculty</a></li>
+                            <li><a href="#">Campus Tour</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#programs">Academics <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Elementary School</a></li>
+                            <li><a href="#">Middle School</a></li>
+                            <li><a href="#">High School</a></li>
+                            <li><a href="#">Curriculum</a></li>
+                            <li><a href="#">Special Programs</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#admissions">Admissions <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Application Process</a></li>
+                            <li><a href="#">Entry Requirements</a></li>
+                            <li><a href="#">Tuition & Fees</a></li>
+                            <li><a href="#">Financial Aid</a></li>
+                            <li><a href="#">Schedule a Tour</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#student-life">Student Life <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="#">Clubs & Societies</a></li>
+                            <li><a href="#">Athletics</a></li>
+                            <li><a href="#">Arts & Culture</a></li>
+                            <li><a href="#">Student Support</a></li>
+                            <li><a href="#">Campus Events</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
                 </ul>
-                <div class="hamburger">
+                <div class="hamburger" id="hamburger">
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-close" id="mobileClose">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li>
+                <a href="#about" class="mobile-dropdown-toggle">About <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Our History</a></li>
+                    <li><a href="#">Mission & Vision</a></li>
+                    <li><a href="#">Leadership</a></li>
+                    <li><a href="#">Faculty</a></li>
+                    <li><a href="#">Campus Tour</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#programs" class="mobile-dropdown-toggle">Academics <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Elementary School</a></li>
+                    <li><a href="#">Middle School</a></li>
+                    <li><a href="#">High School</a></li>
+                    <li><a href="#">Curriculum</a></li>
+                    <li><a href="#">Special Programs</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#admissions" class="mobile-dropdown-toggle">Admissions <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Application Process</a></li>
+                    <li><a href="#">Entry Requirements</a></li>
+                    <li><a href="#">Tuition & Fees</a></li>
+                    <li><a href="#">Financial Aid</a></li>
+                    <li><a href="#">Schedule a Tour</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#student-life" class="mobile-dropdown-toggle">Student Life <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">Clubs & Societies</a></li>
+                    <li><a href="#">Athletics</a></li>
+                    <li><a href="#">Arts & Culture</a></li>
+                    <li><a href="#">Student Support</a></li>
+                    <li><a href="#">Campus Events</a></li>
+                </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+            <li>
+                <button class="theme-toggle" id="mobileThemeToggle">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+            </li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -746,7 +1008,7 @@
                 <p>At Divine Grace Academy, we nurture young minds with a perfect blend of academic rigor, character development, and creative expression.</p>
                 <div class="hero-btns">
                     <a href="#about" class="btn btn-primary">Learn More</a>
-                    <a href="#contact" class="btn btn-secondary">Apply Now</a>
+                    <a href="#admissions" class="btn btn-secondary">Apply Now</a>
                 </div>
             </div>
         </div>
@@ -1020,13 +1282,42 @@
 
     <script>
         // Mobile Menu Toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        const overlay = document.getElementById('overlay');
         
         hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.querySelector('i').classList.toggle('fa-bars');
-            hamburger.querySelector('i').classList.toggle('fa-times');
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        overlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Mobile Dropdown Toggle
+        const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+        
+        mobileDropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const dropdown = toggle.nextElementSibling;
+                dropdown.classList.toggle('active');
+                
+                const icon = toggle.querySelector('.dropdown-icon');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
         });
         
         // Header Scroll Effect
@@ -1099,14 +1390,57 @@
                     });
                     
                     // Close mobile menu if open
-                    if (navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        hamburger.querySelector('i').classList.add('fa-bars');
-                        hamburger.querySelector('i').classList.remove('fa-times');
+                    if (mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
                     }
                 }
             });
         });
+        
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // Update toggle icons
+            const icons = document.querySelectorAll('.theme-toggle i');
+            icons.forEach(icon => {
+                if (isDarkMode) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            // Update mobile toggle text
+            if (mobileThemeToggle) {
+                mobileThemeToggle.innerHTML = isDarkMode ? 
+                    '<i class="fas fa-sun"></i> Light Mode' : 
+                    '<i class="fas fa-moon"></i> Dark Mode';
+            }
+        }
+        
+        themeToggle.addEventListener('click', toggleDarkMode);
+        mobileThemeToggle.addEventListener('click', toggleDarkMode);
+        
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            const icons = document.querySelectorAll('.theme-toggle i');
+            icons.forEach(icon => {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            });
+            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        }
     </script>
 </body>
 </html>
