@@ -5,8 +5,10 @@ let formData = {};
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Application form initialized');
     loadProgress();
     updateProgressBar();
+    updateChecklist();
 });
 
 // Progress Management
@@ -15,7 +17,7 @@ function updateProgressBar() {
     const progressText = document.getElementById('progressText');
     const progressPercent = document.getElementById('progressPercent');
     
-    const progress = ((currentStep - 1) / totalSteps) * 100;
+    const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
     
     if (progressFill) {
         progressFill.style.width = progress + '%';
@@ -48,20 +50,48 @@ function updateProgressBar() {
     }
 }
 
+// Update checklist progress
+function updateChecklist() {
+    const checklistItems = document.querySelectorAll('.checklist-item');
+    checklistItems.forEach((item, index) => {
+        const icon = item.querySelector('i');
+        if (index < currentStep - 1) {
+            item.classList.add('completed');
+            icon.className = 'fas fa-check-circle';
+        } else {
+            item.classList.remove('completed');
+            icon.className = 'far fa-circle';
+        }
+    });
+}
+
 // Navigation Functions
 function nextStep() {
-    if (currentStep < totalSteps) {
-        showStep(currentStep + 1);
+    console.log('Next step clicked, current step:', currentStep);
+    
+    // Validate current step before moving forward
+    if (validateStep(currentStep)) {
+        console.log('Validation passed, moving to step:', currentStep + 1);
+        if (currentStep < totalSteps) {
+            showStep(currentStep + 1);
+        }
+    } else {
+        console.log('Validation failed');
+        // Shake the next button to indicate error
+        shakeNextButton();
     }
 }
 
 function prevStep() {
+    console.log('Previous step clicked');
     if (currentStep > 1) {
         showStep(currentStep - 1);
     }
 }
 
 function showStep(stepNumber) {
+    console.log('Showing step:', stepNumber);
+    
     // Hide all steps
     document.querySelectorAll('.form-step').forEach(step => {
         step.classList.remove('active');
@@ -73,15 +103,31 @@ function showStep(stepNumber) {
         currentStepElement.classList.add('active');
         currentStep = stepNumber;
         updateProgressBar();
+        updateChecklist();
         saveProgress();
+        console.log('Step displayed successfully');
+    } else {
+        console.error('Step element not found: step' + stepNumber);
     }
     
     // Hide validation summary when changing steps
     hideValidationSummary();
 }
 
+// Shake animation for next button
+function shakeNextButton() {
+    const nextButton = document.querySelector('.btn-primary');
+    if (nextButton) {
+        nextButton.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+            nextButton.style.animation = '';
+        }, 500);
+    }
+}
+
 // Validation Functions
 function validateStep(step) {
+    console.log('Validating step:', step);
     let isValid = true;
     const errors = [];
     
@@ -90,42 +136,58 @@ function validateStep(step) {
     
     switch(step) {
         case 1:
-            isValid = validateStep1() && isValid;
+            isValid = validateStep1(errors) && isValid;
             break;
         case 2:
-            isValid = validateStep2() && isValid;
+            isValid = validateStep2(errors) && isValid;
             break;
         case 3:
-            isValid = validateStep3() && isValid;
+            isValid = validateStep3(errors) && isValid;
             break;
         case 4:
-            isValid = validateStep4() && isValid;
+            isValid = validateStep4(errors) && isValid;
             break;
         case 5:
-            isValid = validateStep5() && isValid;
+            isValid = validateStep5(errors) && isValid;
             break;
     }
     
-    if (isValid) {
-        if (step === totalSteps) {
-            submitApplication();
-        } else {
-            nextStep();
-        }
-    } else {
+    console.log('Step', step, 'is valid:', isValid);
+    
+    if (!isValid) {
         showValidationSummary(errors);
+        highlightRequiredFields(step);
+    } else {
+        hideValidationSummary();
     }
     
     return isValid;
 }
 
-function validateStep1() {
+function highlightRequiredFields(step) {
+    const stepElement = document.getElementById('step' + step);
+    if (stepElement) {
+        const requiredFields = stepElement.querySelectorAll('.required');
+        requiredFields.forEach(field => {
+            const input = field.closest('.form-group').querySelector('input, select, textarea');
+            if (input && !input.value && input.type !== 'checkbox') {
+                input.classList.add('highlight-required');
+                setTimeout(() => {
+                    input.classList.remove('highlight-required');
+                }, 2000);
+            }
+        });
+    }
+}
+
+function validateStep1(errors) {
     let isValid = true;
     
     // Student Name Validation
     const studentName = document.getElementById('studentName');
     if (!studentName.value.trim() || studentName.value.trim().length < 2) {
-        showError('studentName', 'Please enter a valid full name (minimum 2 characters)');
+        showError('studentName', 'Please enter student\'s full name');
+        errors.push('Student name is required');
         isValid = false;
     } else {
         showSuccess('studentName');
@@ -134,7 +196,8 @@ function validateStep1() {
     // Date of Birth Validation
     const studentDob = document.getElementById('studentDob');
     if (!studentDob.value) {
-        showError('studentDob', 'Please enter date of birth');
+        showError('studentDob', 'Please select date of birth');
+        errors.push('Date of birth is required');
         isValid = false;
     } else {
         const dob = new Date(studentDob.value);
@@ -143,6 +206,7 @@ function validateStep1() {
         
         if (age < 5 || age > 18) {
             showError('studentDob', 'Student must be between 5 and 18 years old');
+            errors.push('Student must be between 5 and 18 years old');
             isValid = false;
         } else {
             showSuccess('studentDob');
@@ -152,7 +216,8 @@ function validateStep1() {
     // Gender Validation
     const studentGender = document.getElementById('studentGender');
     if (!studentGender.value) {
-        showError('studentGender', 'Please select a gender');
+        showError('studentGender', 'Please select gender');
+        errors.push('Gender is required');
         isValid = false;
     } else {
         showSuccess('studentGender');
@@ -161,7 +226,8 @@ function validateStep1() {
     // Grade Level Validation
     const gradeLevel = document.getElementById('gradeLevel');
     if (!gradeLevel.value) {
-        showError('gradeLevel', 'Please select a grade level');
+        showError('gradeLevel', 'Please select grade level');
+        errors.push('Grade level is required');
         isValid = false;
     } else {
         showSuccess('gradeLevel');
@@ -170,13 +236,14 @@ function validateStep1() {
     return isValid;
 }
 
-function validateStep2() {
+function validateStep2(errors) {
     let isValid = true;
     
     // Parent Name Validation
     const parentName = document.getElementById('parentName');
     if (!parentName.value.trim() || parentName.value.trim().length < 2) {
-        showError('parentName', 'Please enter a valid name (minimum 2 characters)');
+        showError('parentName', 'Please enter parent/guardian name');
+        errors.push('Parent name is required');
         isValid = false;
     } else {
         showSuccess('parentName');
@@ -187,6 +254,7 @@ function validateStep2() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!parentEmail.value || !emailRegex.test(parentEmail.value)) {
         showError('parentEmail', 'Please enter a valid email address');
+        errors.push('Valid email address is required');
         isValid = false;
     } else {
         showSuccess('parentEmail');
@@ -195,8 +263,10 @@ function validateStep2() {
     // Phone Validation
     const parentPhone = document.getElementById('parentPhone');
     const phoneRegex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-    if (!parentPhone.value || !phoneRegex.test(parentPhone.value.replace(/\D/g, ''))) {
-        showError('parentPhone', 'Please enter a valid phone number');
+    const phoneDigits = parentPhone.value.replace(/\D/g, '');
+    if (!parentPhone.value || phoneDigits.length !== 10) {
+        showError('parentPhone', 'Please enter a valid 10-digit phone number');
+        errors.push('Valid phone number is required');
         isValid = false;
     } else {
         showSuccess('parentPhone');
@@ -205,7 +275,8 @@ function validateStep2() {
     // Relationship Validation
     const parentRelationship = document.getElementById('parentRelationship');
     if (!parentRelationship.value) {
-        showError('parentRelationship', 'Please select a relationship');
+        showError('parentRelationship', 'Please select relationship to student');
+        errors.push('Relationship to student is required');
         isValid = false;
     } else {
         showSuccess('parentRelationship');
@@ -214,13 +285,14 @@ function validateStep2() {
     return isValid;
 }
 
-function validateStep3() {
+function validateStep3(errors) {
     let isValid = true;
     
     // Current School Validation
     const currentSchool = document.getElementById('currentSchool');
     if (!currentSchool.value.trim()) {
         showError('currentSchool', 'Please enter current school name');
+        errors.push('Current school name is required');
         isValid = false;
     } else {
         showSuccess('currentSchool');
@@ -230,6 +302,7 @@ function validateStep3() {
     const currentGrade = document.getElementById('currentGrade');
     if (!currentGrade.value.trim()) {
         showError('currentGrade', 'Please enter current grade level');
+        errors.push('Current grade level is required');
         isValid = false;
     } else {
         showSuccess('currentGrade');
@@ -238,18 +311,19 @@ function validateStep3() {
     return isValid;
 }
 
-function validateStep4() {
+function validateStep4(errors) {
     // Step 4 fields are optional, so always valid
     return true;
 }
 
-function validateStep5() {
+function validateStep5(errors) {
     let isValid = true;
     
     // Hear About Us Validation
     const hearAbout = document.getElementById('hearAbout');
     if (!hearAbout.value) {
         showError('hearAbout', 'Please select how you heard about us');
+        errors.push('Please tell us how you heard about us');
         isValid = false;
     } else {
         showSuccess('hearAbout');
@@ -259,6 +333,7 @@ function validateStep5() {
     const agreeTerms = document.getElementById('agreeTerms');
     if (!agreeTerms.checked) {
         showError('agreeTerms', 'You must certify that the information is accurate');
+        errors.push('You must certify that the information is accurate');
         isValid = false;
     } else {
         showSuccess('agreeTerms');
@@ -268,6 +343,7 @@ function validateStep5() {
     const agreePrivacy = document.getElementById('agreePrivacy');
     if (!agreePrivacy.checked) {
         showError('agreePrivacy', 'You must agree to the privacy policy');
+        errors.push('You must agree to the privacy policy');
         isValid = false;
     } else {
         showSuccess('agreePrivacy');
@@ -284,6 +360,11 @@ function showError(fieldId, message) {
     if (field) {
         field.classList.add('error');
         field.classList.remove('success');
+        
+        // Add focus to the first error field
+        if (!document.querySelector('.error:focus')) {
+            field.focus();
+        }
     }
     
     if (errorElement) {
@@ -311,7 +392,7 @@ function clearStepErrors(step) {
     if (stepElement) {
         const inputs = stepElement.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
-            input.classList.remove('error', 'success');
+            input.classList.remove('error', 'success', 'highlight-required');
             const errorElement = document.getElementById(input.id + 'Error');
             if (errorElement) {
                 errorElement.style.display = 'none';
@@ -336,8 +417,48 @@ function showValidationSummary(errors) {
             
             // Scroll to validation summary
             summary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Show alert message for better visibility
+            showAlertMessage(`Please fill in ${errors.length} required field(s) before continuing`);
         }
     }
+}
+
+function showAlertMessage(message) {
+    // Remove existing alert if any
+    const existingAlert = document.querySelector('.validation-alert');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+    
+    // Create alert message
+    const alert = document.createElement('div');
+    alert.className = 'validation-alert';
+    alert.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+            max-width: 300px;
+        ">
+            <i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>
+            ${message}
+        </div>
+    `;
+    
+    document.body.appendChild(alert);
+    
+    // Auto remove after 4 seconds
+    setTimeout(() => {
+        alert.remove();
+    }, 4000);
 }
 
 function hideValidationSummary() {
@@ -419,6 +540,7 @@ function clearSavedProgress() {
 
 // Form Submission
 function submitApplication() {
+    console.log('Submitting application');
     if (validateStep(5)) {
         // Collect final form data
         const finalData = collectFormData();
@@ -435,22 +557,22 @@ function submitApplication() {
         clearSavedProgress();
         
         // Show success message
-        showSuccessMessage();
-        
-        // In a real application, you would also:
-        // 1. Send data to your server via AJAX
-        // 2. Show loading state
-        // 3. Handle server response
-        // 4. Send confirmation email
+        showSuccessMessage(finalData.applicationId);
+    } else {
+        shakeNextButton();
     }
 }
 
-function showSuccessMessage() {
+function showSuccessMessage(applicationId) {
     const form = document.getElementById('applicationForm');
     const successMessage = document.getElementById('successMessage');
+    const applicationIdElement = document.getElementById('applicationId');
     
-    if (form && successMessage) {
+    if (form && successMessage && applicationIdElement) {
         form.style.display = 'none';
+        document.getElementById('checklist').style.display = 'none';
+        document.getElementById('validationSummary').style.display = 'none';
+        applicationIdElement.textContent = applicationId;
         successMessage.style.display = 'block';
         
         // Scroll to success message
@@ -475,9 +597,3 @@ document.addEventListener('input', function(e) {
 
 // Auto-save every 30 seconds
 setInterval(saveProgress, 30000);
-
-// Clear saved data when leaving the page (optional)
-window.addEventListener('beforeunload', function() {
-    // You might want to keep the data for returning users
-    // clearSavedProgress();
-});
