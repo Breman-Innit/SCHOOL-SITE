@@ -1,4 +1,4 @@
-// Mobile Menu Toggle
+  // Mobile Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileClose = document.getElementById('mobileClose');
@@ -173,3 +173,54 @@
             });
             mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
         }
+        
+        // Animated Statistics Counter
+        function animateCounter(element, start, end, duration, suffix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Check if statistics section is in viewport
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        
+        // Statistics animation trigger
+        let statsAnimated = false;
+        
+        function checkStatsAnimation() {
+            const statsSection = document.querySelector('.stats');
+            if (isElementInViewport(statsSection) && !statsAnimated) {
+                statsAnimated = true;
+                
+                // Animate graduation rate
+                animateCounter(document.getElementById('graduationRate'), 0, 98, 2000, '%');
+                
+                // Animate years of excellence
+                animateCounter(document.getElementById('yearsOfExcellence'), 0, 27, 2000);
+                
+                // Animate successful alumni
+                animateCounter(document.getElementById('successfulAlumni'), 0, 1200, 2000, '+');
+            }
+        }
+        
+        // Check for stats animation on scroll
+        window.addEventListener('scroll', checkStatsAnimation);
+        
+        // Also check on page load in case stats are already in viewport
+        window.addEventListener('load', checkStatsAnimation);

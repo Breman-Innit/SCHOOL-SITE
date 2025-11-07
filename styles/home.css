@@ -275,17 +275,16 @@
         }
 
         /* Hero Section */
-.hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=1920') no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    color: white !important; /* CHANGE THIS - always white */
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=1920') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            color: white !important;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
         .hero-content {
             max-width: 800px;
@@ -871,4 +870,3 @@
                 width: 100%;
             }
         }
- 
