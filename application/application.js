@@ -1,0 +1,483 @@
+// Application State Management
+let currentStep = 1;
+const totalSteps = 5;
+let formData = {};
+
+// Initialize application
+document.addEventListener('DOMContentLoaded', function() {
+    loadProgress();
+    updateProgressBar();
+});
+
+// Progress Management
+function updateProgressBar() {
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    
+    const progress = ((currentStep - 1) / totalSteps) * 100;
+    
+    if (progressFill) {
+        progressFill.style.width = progress + '%';
+    }
+    
+    if (progressPercent) {
+        progressPercent.textContent = Math.round(progress) + '%';
+    }
+    
+    // Update step indicators
+    document.querySelectorAll('.step-dot').forEach((dot, index) => {
+        if (index < currentStep) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+    
+    // Update step text
+    const stepTexts = [
+        'Step 1 of 5 - Student Information',
+        'Step 2 of 5 - Parent Information',
+        'Step 3 of 5 - School Information',
+        'Step 4 of 5 - Additional Information',
+        'Step 5 of 5 - Review & Submit'
+    ];
+    
+    if (progressText) {
+        progressText.textContent = stepTexts[currentStep - 1];
+    }
+}
+
+// Navigation Functions
+function nextStep() {
+    if (currentStep < totalSteps) {
+        showStep(currentStep + 1);
+    }
+}
+
+function prevStep() {
+    if (currentStep > 1) {
+        showStep(currentStep - 1);
+    }
+}
+
+function showStep(stepNumber) {
+    // Hide all steps
+    document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.remove('active');
+    });
+    
+    // Show current step
+    const currentStepElement = document.getElementById('step' + stepNumber);
+    if (currentStepElement) {
+        currentStepElement.classList.add('active');
+        currentStep = stepNumber;
+        updateProgressBar();
+        saveProgress();
+    }
+    
+    // Hide validation summary when changing steps
+    hideValidationSummary();
+}
+
+// Validation Functions
+function validateStep(step) {
+    let isValid = true;
+    const errors = [];
+    
+    // Clear previous errors
+    clearStepErrors(step);
+    
+    switch(step) {
+        case 1:
+            isValid = validateStep1() && isValid;
+            break;
+        case 2:
+            isValid = validateStep2() && isValid;
+            break;
+        case 3:
+            isValid = validateStep3() && isValid;
+            break;
+        case 4:
+            isValid = validateStep4() && isValid;
+            break;
+        case 5:
+            isValid = validateStep5() && isValid;
+            break;
+    }
+    
+    if (isValid) {
+        if (step === totalSteps) {
+            submitApplication();
+        } else {
+            nextStep();
+        }
+    } else {
+        showValidationSummary(errors);
+    }
+    
+    return isValid;
+}
+
+function validateStep1() {
+    let isValid = true;
+    
+    // Student Name Validation
+    const studentName = document.getElementById('studentName');
+    if (!studentName.value.trim() || studentName.value.trim().length < 2) {
+        showError('studentName', 'Please enter a valid full name (minimum 2 characters)');
+        isValid = false;
+    } else {
+        showSuccess('studentName');
+    }
+    
+    // Date of Birth Validation
+    const studentDob = document.getElementById('studentDob');
+    if (!studentDob.value) {
+        showError('studentDob', 'Please enter date of birth');
+        isValid = false;
+    } else {
+        const dob = new Date(studentDob.value);
+        const today = new Date();
+        const age = today.getFullYear() - dob.getFullYear();
+        
+        if (age < 5 || age > 18) {
+            showError('studentDob', 'Student must be between 5 and 18 years old');
+            isValid = false;
+        } else {
+            showSuccess('studentDob');
+        }
+    }
+    
+    // Gender Validation
+    const studentGender = document.getElementById('studentGender');
+    if (!studentGender.value) {
+        showError('studentGender', 'Please select a gender');
+        isValid = false;
+    } else {
+        showSuccess('studentGender');
+    }
+    
+    // Grade Level Validation
+    const gradeLevel = document.getElementById('gradeLevel');
+    if (!gradeLevel.value) {
+        showError('gradeLevel', 'Please select a grade level');
+        isValid = false;
+    } else {
+        showSuccess('gradeLevel');
+    }
+    
+    return isValid;
+}
+
+function validateStep2() {
+    let isValid = true;
+    
+    // Parent Name Validation
+    const parentName = document.getElementById('parentName');
+    if (!parentName.value.trim() || parentName.value.trim().length < 2) {
+        showError('parentName', 'Please enter a valid name (minimum 2 characters)');
+        isValid = false;
+    } else {
+        showSuccess('parentName');
+    }
+    
+    // Email Validation
+    const parentEmail = document.getElementById('parentEmail');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!parentEmail.value || !emailRegex.test(parentEmail.value)) {
+        showError('parentEmail', 'Please enter a valid email address');
+        isValid = false;
+    } else {
+        showSuccess('parentEmail');
+    }
+    
+    // Phone Validation
+    const parentPhone = document.getElementById('parentPhone');
+    const phoneRegex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+    if (!parentPhone.value || !phoneRegex.test(parentPhone.value.replace(/\D/g, ''))) {
+        showError('parentPhone', 'Please enter a valid phone number');
+        isValid = false;
+    } else {
+        showSuccess('parentPhone');
+    }
+    
+    // Relationship Validation
+    const parentRelationship = document.getElementById('parentRelationship');
+    if (!parentRelationship.value) {
+        showError('parentRelationship', 'Please select a relationship');
+        isValid = false;
+    } else {
+        showSuccess('parentRelationship');
+    }
+    
+    return isValid;
+}
+
+function validateStep3() {
+    let isValid = true;
+    
+    // Current School Validation
+    const currentSchool = document.getElementById('currentSchool');
+    if (!currentSchool.value.trim()) {
+        showError('currentSchool', 'Please enter current school name');
+        isValid = false;
+    } else {
+        showSuccess('currentSchool');
+    }
+    
+    // Current Grade Validation
+    const currentGrade = document.getElementById('currentGrade');
+    if (!currentGrade.value.trim()) {
+        showError('currentGrade', 'Please enter current grade level');
+        isValid = false;
+    } else {
+        showSuccess('currentGrade');
+    }
+    
+    return isValid;
+}
+
+function validateStep4() {
+    // Step 4 fields are optional, so always valid
+    return true;
+}
+
+function validateStep5() {
+    let isValid = true;
+    
+    // Hear About Us Validation
+    const hearAbout = document.getElementById('hearAbout');
+    if (!hearAbout.value) {
+        showError('hearAbout', 'Please select how you heard about us');
+        isValid = false;
+    } else {
+        showSuccess('hearAbout');
+    }
+    
+    // Terms Agreement Validation
+    const agreeTerms = document.getElementById('agreeTerms');
+    if (!agreeTerms.checked) {
+        showError('agreeTerms', 'You must certify that the information is accurate');
+        isValid = false;
+    } else {
+        showSuccess('agreeTerms');
+    }
+    
+    // Privacy Agreement Validation
+    const agreePrivacy = document.getElementById('agreePrivacy');
+    if (!agreePrivacy.checked) {
+        showError('agreePrivacy', 'You must agree to the privacy policy');
+        isValid = false;
+    } else {
+        showSuccess('agreePrivacy');
+    }
+    
+    return isValid;
+}
+
+// Error Handling Functions
+function showError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(fieldId + 'Error');
+    
+    if (field) {
+        field.classList.add('error');
+        field.classList.remove('success');
+    }
+    
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+}
+
+function showSuccess(fieldId) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(fieldId + 'Error');
+    
+    if (field) {
+        field.classList.remove('error');
+        field.classList.add('success');
+    }
+    
+    if (errorElement) {
+        errorElement.style.display = 'none';
+    }
+}
+
+function clearStepErrors(step) {
+    const stepElement = document.getElementById('step' + step);
+    if (stepElement) {
+        const inputs = stepElement.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.classList.remove('error', 'success');
+            const errorElement = document.getElementById(input.id + 'Error');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        });
+    }
+}
+
+function showValidationSummary(errors) {
+    const summary = document.getElementById('validationSummary');
+    const errorsList = document.getElementById('validationErrors');
+    
+    if (summary && errorsList) {
+        if (errors.length > 0) {
+            errorsList.innerHTML = '';
+            errors.forEach(error => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error}`;
+                errorsList.appendChild(li);
+            });
+            summary.style.display = 'block';
+            
+            // Scroll to validation summary
+            summary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+}
+
+function hideValidationSummary() {
+    const summary = document.getElementById('validationSummary');
+    if (summary) {
+        summary.style.display = 'none';
+    }
+}
+
+// Progress Saving (Local Storage)
+function saveProgress() {
+    const formData = collectFormData();
+    const progressData = {
+        currentStep: currentStep,
+        formData: formData,
+        timestamp: new Date().getTime()
+    };
+    
+    localStorage.setItem('divineGraceApplication', JSON.stringify(progressData));
+}
+
+function loadProgress() {
+    const saved = localStorage.getItem('divineGraceApplication');
+    if (saved) {
+        try {
+            const progressData = JSON.parse(saved);
+            currentStep = progressData.currentStep || 1;
+            
+            // Restore form data
+            if (progressData.formData) {
+                restoreFormData(progressData.formData);
+            }
+            
+            showStep(currentStep);
+        } catch (e) {
+            console.log('No saved progress found');
+        }
+    }
+}
+
+function collectFormData() {
+    const form = document.getElementById('applicationForm');
+    const formData = {};
+    
+    if (form) {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                formData[input.name] = input.checked;
+            } else {
+                formData[input.name] = input.value;
+            }
+        });
+    }
+    
+    return formData;
+}
+
+function restoreFormData(formData) {
+    const form = document.getElementById('applicationForm');
+    
+    if (form) {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (formData.hasOwnProperty(input.name)) {
+                if (input.type === 'checkbox') {
+                    input.checked = formData[input.name];
+                } else {
+                    input.value = formData[input.name];
+                }
+            }
+        });
+    }
+}
+
+function clearSavedProgress() {
+    localStorage.removeItem('divineGraceApplication');
+}
+
+// Form Submission
+function submitApplication() {
+    if (validateStep(5)) {
+        // Collect final form data
+        const finalData = collectFormData();
+        
+        // In a real application, you would send this to a server
+        // For now, we'll just show success and save to localStorage
+        finalData.submittedAt = new Date().toISOString();
+        finalData.applicationId = 'DGA-' + Date.now();
+        
+        // Save the final submission
+        localStorage.setItem('divineGraceApplicationSubmitted', JSON.stringify(finalData));
+        
+        // Clear the in-progress data
+        clearSavedProgress();
+        
+        // Show success message
+        showSuccessMessage();
+        
+        // In a real application, you would also:
+        // 1. Send data to your server via AJAX
+        // 2. Show loading state
+        // 3. Handle server response
+        // 4. Send confirmation email
+    }
+}
+
+function showSuccessMessage() {
+    const form = document.getElementById('applicationForm');
+    const successMessage = document.getElementById('successMessage');
+    
+    if (form && successMessage) {
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+        
+        // Scroll to success message
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Real-time validation for better UX
+document.addEventListener('input', function(e) {
+    if (e.target.type !== 'checkbox') {
+        // Clear error when user starts typing
+        const field = e.target;
+        if (field.classList.contains('error')) {
+            field.classList.remove('error');
+            const errorElement = document.getElementById(field.id + 'Error');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+    }
+});
+
+// Auto-save every 30 seconds
+setInterval(saveProgress, 30000);
+
+// Clear saved data when leaving the page (optional)
+window.addEventListener('beforeunload', function() {
+    // You might want to keep the data for returning users
+    // clearSavedProgress();
+});
