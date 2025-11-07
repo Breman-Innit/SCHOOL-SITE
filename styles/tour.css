@@ -510,7 +510,7 @@
 
         /* Footer */
         footer {
-            background-color: var(--primary);
+              background-color: var(--footer-bg);
             color: white;
             padding: 60px 0 30px;
         }
