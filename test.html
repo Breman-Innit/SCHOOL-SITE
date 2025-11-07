@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply to Divine Grace Academy</title>
-    <!-- Your existing theme styles -->
+    <title>Schedule a Tour - Divine Grace Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Your existing theme variables */
-        :root {
+         :root {
             --primary: #1a4b8c;
             --secondary: #f8b739;
             --accent: #2c6e49;
@@ -19,6 +17,8 @@
             --bg-color: #ffffff;
             --text-color: #333333;
             --card-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #1a1a1a;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
@@ -36,67 +36,274 @@
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 20px;
+            line-height: 1.6;
             transition: var(--transition);
         }
 
-        .application-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 40px;
-            background: var(--card-bg);
-            border-radius: 10px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--light);
+            color: black;
+            padding: 20px 0;
             box-shadow: var(--shadow);
-            animation: fadeIn 0.6s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .progress-tracker {
-            margin: 30px 0;
-            text-align: center;
+        .logo {
+            display: flex;
+            align-items: center;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 10px;
+        .logo i {
+            font-size: 32px;
+            margin-right: 10px;
+            color: var(--primary)
         }
 
-        .dark-mode .progress-bar {
-            background: #2d2d2d;
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: var(--primary);
-            transition: width 0.3s ease;
-            width: 0%;
+        .nav-links {
+            display: flex;
+            list-style: none;
         }
 
-        .progress-text {
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            color: black;
+            text-decoration: none;
             font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+      .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.pexels.com/photos/7972563/pexels-photo-7972563.jpeg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            color: white !important;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border-color: var(--secondary);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-color);
+            font-size: 18px;
+        }
+
+        /* Tour Options */
+        .tour-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .tour-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .tour-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-content {
+            padding: 25px;
+        }
+
+        .tour-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .tour-content p {
+            margin-bottom: 20px;
             color: var(--text-color);
         }
 
-        .form-step {
-            display: none;
-            animation: fadeIn 0.5s ease;
+        .tour-features {
+            list-style: none;
+            margin-bottom: 20px;
         }
 
-        .form-step.active {
-            display: block;
+        .tour-features li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tour-features i {
+            color: var(--accent);
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .tour-duration {
+            display: inline-block;
+            background-color: var(--light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .dark-mode .tour-duration {
+            background-color: #3d3d3d;
+        }
+
+        /* Schedule Form */
+        .schedule-form-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .form-header h3 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .form-group {
@@ -109,178 +316,677 @@
             font-weight: 500;
         }
 
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 2px solid #e0e0e0;
             border-radius: 5px;
             font-size: 16px;
             transition: var(--transition);
             background: var(--card-bg);
             color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
         }
 
         .dark-mode .form-group input, 
-        .dark-mode .form-group select {
+        .dark-mode .form-group select,
+        .dark-mode .form-group textarea {
             border-color: #444;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--primary);
             outline: none;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            border: 2px solid;
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input {
+            width: auto;
             margin-right: 10px;
-            font-size: 16px;
+            margin-top: 5px;
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
         }
 
-        .btn-primary:hover {
-            background-color: transparent;
+        .form-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-large {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+
+        /* Campus Highlights */
+        .campus-highlights {
+            background-color: var(--light);
+            padding: 80px 0;
+            margin-top: 80px;
+        }
+
+        .dark-mode .campus-highlights {
+            background-color: #2d2d2d;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .highlight-card {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .highlight-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 28px;
+        }
+
+        .highlight-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
             color: var(--primary);
         }
 
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: var(--dark);
-            border-color: var(--secondary);
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
         }
 
-        .btn-secondary:hover {
-            background-color: transparent;
-            color: var(--secondary);
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .checklist {
-            background: var(--light);
-            padding: 20px;
+        .faq-item {
+            margin-bottom: 20px;
             border-radius: 8px;
-            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
-        .dark-mode .checklist {
-            background: #2d2d2d;
+        .faq-question {
+            background-color: var(--card-bg);
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
-        .checklist-item {
+        .faq-question:hover {
+            background-color: var(--light);
+        }
+
+        .dark-mode .faq-question:hover {
+            background-color: #3d3d3d;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .faq-answer p {
+            padding: 20px 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-links a {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .checklist-item.completed {
-            color: var(--accent);
-        }
-
-        .checklist-item i {
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 5px 10px;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="application-container">
-        <h1>Application Portal</h1>
-        
-        <!-- Progress Tracker -->
-        <div class="progress-tracker">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <span class="progress-text" id="progressText">0% Complete</span>
-        </div>
-
-        <!-- Interactive Checklist -->
-        <div class="checklist" id="checklist">
-            <h3>Application Requirements</h3>
-            <div class="checklist-item">
-                <i class="far fa-circle"></i>
-                <span>Student Information</span>
-            </div>
-            <div class="checklist-item">
-                <i class="far fa-circle"></i>
-                <span>Parent/Guardian Details</span>
-            </div>
-            <div class="checklist-item">
-                <i class="far fa-circle"></i>
-                <span>School Information</span>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Divine Grace Academy</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="academics.html">Academics</a></li>
+                    <li><a href="admissions.html">Admissions</a></li>
+                    <li><a href="schedule-tour.html" class="active">Schedule a Tour</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
             </div>
         </div>
-        
-        <!-- Multi-Step Form -->
-        <div class="application-form">
-            <!-- Step 1: Student Information -->
-            <div class="form-step active" id="step1">
-                <h2>Student Information</h2>
-                <div class="form-group">
-                    <label>Student's Full Name *</label>
-                    <input type="text" id="studentName" required>
-                </div>
-                <div class="form-group">
-                    <label>Date of Birth *</label>
-                    <input type="date" id="studentDob" required>
-                </div>
-                <div class="form-group">
-                    <label>Grade Applying For *</label>
-                    <select id="gradeLevel" required>
-                        <option value="">Select Grade</option>
-                        <option>Elementary School</option>
-                        <option>Middle School</option>
-                        <option>High School</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" onclick="nextStep()">Next</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Experience Divine Grace Academy</h2>
+            <p>Schedule a personalized tour and discover why our students thrive in our nurturing and challenging academic environment.</p>
+            <a href="#schedule-form" class="btn btn-primary">Schedule Your Tour Now</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tour Options</h2>
+                <p>Choose the tour experience that best fits your needs and schedule</p>
             </div>
 
-            <!-- Step 2: Parent Information -->
-            <div class="form-step" id="step2">
-                <h2>Parent/Guardian Information</h2>
-                <div class="form-group">
-                    <label>Parent Name *</label>
-                    <input type="text" id="parentName" required>
+            <div class="tour-options">
+                <!-- Individual Tour -->
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="tour-content">
+                        <span class="tour-duration">60-90 minutes</span>
+                        <h3>Individual Family Tour</h3>
+                        <p>A personalized tour designed for your family to explore our campus and ask specific questions about your child's educational journey.</p>
+                        <ul class="tour-features">
+                            <li><i class="fas fa-check"></i> Personalized campus walkthrough</li>
+                            <li><i class="fas fa-check"></i> Meet with admissions staff</li>
+                            <li><i class="fas fa-check"></i> Classroom observations (when available)</li>
+                            <li><i class="fas fa-check"></i> Q&A session with principal</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Email *</label>
-                    <input type="email" id="parentEmail" required>
+
+                <!-- Group Tour -->
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="tour-content">
+                        <span class="tour-duration">90 minutes</span>
+                        <h3>Group Information Session</h3>
+                        <p>Join other prospective families for an overview of our programs followed by a guided tour of our facilities.</p>
+                        <ul class="tour-features">
+                            <li><i class="fas fa-check"></i> Presentation by school leadership</li>
+                            <li><i class="fas fa-check"></i> Guided campus tour in small groups</li>
+                            <li><i class="fas fa-check"></i> Student panel discussion</li>
+                            <li><i class="fas fa-check"></i> Refreshments and networking</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number *</label>
-                    <input type="tel" id="parentPhone" required>
+
+                <!-- Virtual Tour -->
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="tour-content">
+                        <span class="tour-duration">45 minutes</span>
+                        <h3>Virtual Tour</h3>
+                        <p>Can't visit in person? Experience our campus through a live virtual tour and interactive Q&A session with our admissions team.</p>
+                        <ul class="tour-features">
+                            <li><i class="fas fa-check"></i> Live virtual campus walkthrough</li>
+                            <li><i class="fas fa-check"></i> Interactive Q&A session</li>
+                            <li><i class="fas fa-check"></i> Digital information packet</li>
+                            <li><i class="fas fa-check"></i> Flexible scheduling options</li>
+                        </ul>
+                    </div>
                 </div>
-                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                <button class="btn btn-primary" onclick="nextStep()">Next</button>
             </div>
 
-            <!-- Step 3: Current School -->
-            <div class="form-step" id="step3">
-                <h2>Current School Information</h2>
-                <div class="form-group">
-                    <label>Current School Name</label>
-                    <input type="text" id="currentSchool">
+            <!-- Schedule Form -->
+            <div class="section-title">
+                <h2>Schedule Your Tour</h2>
+                <p>Fill out the form below and our admissions team will contact you to confirm your tour date and time</p>
+            </div>
+
+            <div class="schedule-form-container" id="schedule-form">
+                <div class="form-header">
+                    <h3>Tour Request Form</h3>
+                    <p>We're excited to show you around our campus!</p>
                 </div>
-                <div class="form-group">
-                    <label>Grade Level Completed</label>
-                    <input type="text" id="currentGrade">
+                <div class="form-content">
+                    <form id="tourForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="studentName">Student Name(s) and Grade Level(s) *</label>
+                            <input type="text" id="studentName" name="studentName" placeholder="e.g., John Doe - Grade 5, Jane Doe - Grade 2" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tourType">Preferred Tour Type *</label>
+                                <select id="tourType" name="tourType" required>
+                                    <option value="">Select Tour Type</option>
+                                    <option value="individual">Individual Family Tour</option>
+                                    <option value="group">Group Information Session</option>
+                                    <option value="virtual">Virtual Tour</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="preferredDate">Preferred Date *</label>
+                                <input type="date" id="preferredDate" name="preferredDate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="preferredTime">Preferred Time *</label>
+                                <select id="preferredTime" name="preferredTime" required>
+                                    <option value="">Select Time</option>
+                                    <option value="morning">Morning (9:00 AM - 11:00 AM)</option>
+                                    <option value="afternoon">Afternoon (1:00 PM - 3:00 PM)</option>
+                                    <option value="evening">Evening (5:00 PM - 7:00 PM)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="hearAbout">How did you hear about us? *</label>
+                                <select id="hearAbout" name="hearAbout" required>
+                                    <option value="">Select Option</option>
+                                    <option value="friend">Friend/Family</option>
+                                    <option value="website">Website</option>
+                                    <option value="social">Social Media</option>
+                                    <option value="event">Community Event</option>
+                                    <option value="ad">Advertisement</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="questions">Specific Questions or Areas of Interest</label>
+                            <textarea id="questions" name="questions" placeholder="Please let us know if you have any specific questions or areas you'd like to focus on during your tour..."></textarea>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter">I would like to receive updates and news from Divine Grace Academy</label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">Submit Tour Request</button>
+                        </div>
+                    </form>
                 </div>
-                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                <button class="btn btn-primary" onclick="submitApplication()">Submit Application</button>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script src="application.js"></script>
+    <!-- Campus Highlights -->
+    <section class="campus-highlights">
+        <div class="container">
+            <div class="section-title">
+                <h2>Campus Highlights</h2>
+                <p>Discover what makes Divine Grace Academy an exceptional learning environment</p>
+            </div>
+
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>State-of-the-Art Labs</h3>
+                    <p>Modern science and computer laboratories equipped with the latest technology</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Extensive Library</h3>
+                    <p>Well-stocked library with diverse resources to support all areas of study</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Creative Arts Spaces</h3>
+                    <p>Dedicated studios for visual arts, music, theater, and dance</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3>Athletic Facilities</h3>
+                    <p>Modern gymnasium, sports fields, and fitness areas for physical education</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about touring our campus</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What should I expect during a campus tour?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>During your campus tour, you'll have the opportunity to see our facilities, observe classrooms in session (when available), meet with faculty and staff, and get a feel for our school community. Tours typically last 60-90 minutes and include time for questions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can my child accompany me on the tour?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We encourage prospective students to join the tour. It's a great opportunity for them to imagine themselves as part of our community. For younger children, we recommend bringing them along to see if they feel comfortable in our environment.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How far in advance should I schedule a tour?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We recommend scheduling your tour at least 2-3 weeks in advance, especially during peak admission seasons (September-November and January-March). This ensures we can accommodate your preferred date and time.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What COVID-19 safety measures are in place?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We follow all local health guidelines to ensure the safety of our visitors and community. Currently, we offer both in-person and virtual tour options. For in-person tours, we may have specific protocols in place which will be communicated to you before your visit.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there parking available on campus?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we have designated visitor parking available. When you arrive on campus, please check in at the main office where our staff will direct you to available parking and greet you for your tour.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Divine Grace Academy</h3>
+                    <p>Providing exceptional education in a nurturing environment since 1995. We are committed to developing the whole child - academically, socially, and emotionally.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="academics.html">Academics</a></li>
+                        <li><a href="admissions.html">Admissions</a></li>
+                        <li><a href="schedule-tour.html">Schedule a Tour</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Education Lane, Learning City, LC 12345</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>admissions@divinegrace.edu</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 Divine Grace Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Form Submission
+        document.getElementById('tourForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // In a real application, you would send this data to a server
+            // For demonstration, we'll just show an alert
+            alert('Thank you for your tour request! Our admissions team will contact you within 24-48 hours to confirm your tour details.');
+            
+            // Reset form
+            this.reset();
+            
+            // Scroll to top of form
+            document.getElementById('schedule-form').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Set minimum date for tour scheduling to today
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        document.getElementById('preferredDate').min = formattedDate;
+    </script>
 </body>
 </html>
