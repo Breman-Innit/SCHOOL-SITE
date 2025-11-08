@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Grace Academy - Information Request</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #f8b739;
+            --accent: #2c6e49;
+            --light: #f5f5f5;
+            --dark: #333;
+            --white: #ffffff;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --sidebar-bg: #f8f9fa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #3a7bd5;
+            --secondary: #ffc145;
+            --accent: #4caf50;
+            --light: #2d2d2d;
+            --dark: #f0f0f0;
+            --white: #121212;
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
+            --sidebar-bg: #2d2d2d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--light);
+            color: var(--dark);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 32px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: rotate(15deg);
+        }
+
+        .dark-mode .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        .dark-mode .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        .dark-mode .theme-toggle .fa-sun {
+            display: block;
+            color: var(--secondary);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .info-sidebar {
+            width: 350px;
+            background: var(--sidebar-bg);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .sidebar-header h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header p {
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .topics-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .topic-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .topic-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .topic-item.selected {
+            border-left: 4px solid var(--secondary);
+            background: linear-gradient(135deg, var(--card-bg), rgba(248, 183, 57, 0.1));
+        }
+
+        .topic-checkbox {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .topic-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        .topic-label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .sidebar-actions {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid;
+            font-size: 16px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 40px;
+            background: var(--bg-color);
+        }
+
+        .content-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .content-header h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .content-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .content-header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-color);
+            font-size: 18px;
+        }
+
+        /* Information Display */
+        .info-display {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .info-display.active {
+            display: block;
+        }
+
+        .selected-topics-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .selected-topics-header h3 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .topic-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .topic-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .topic-card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .topic-card-title {
+            font-size: 22px;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .topic-content {
+            color: var(--text-color);
+        }
+
+        .topic-content p {
+            margin-bottom: 15px;
+        }
+
+        .topic-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .topic-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .topic-features i {
+            color: var(--accent);
+            margin-right: 10px;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .welcome-icon {
+            font-size: 80px;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .welcome-screen h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            
+            .info-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .theme-toggle {
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Divine Grace Academy</h1>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Information Sidebar -->
+        <aside class="info-sidebar">
+            <div class="sidebar-header">
+                <h2>Request Information</h2>
+                <p>What would you like to learn about?</p>
+            </div>
+            
+            <ul class="topics-list" id="topicsList">
+                <li class="topic-item" data-topic="academic">
+                    <input type="checkbox" class="topic-checkbox" id="academic" data-topic="academic">
+                    <div class="topic-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <label class="topic-label" for="academic">Academic Programs</label>
+                </li>
+                
+                <li class="topic-item" data-topic="athletics">
+                    <input type="checkbox" class="topic-checkbox" id="athletics" data-topic="athletics">
+                    <div class="topic-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <label class="topic-label" for="athletics">Athletics</label>
+                </li>
+                
+                <li class="topic-item" data-topic="arts">
+                    <input type="checkbox" class="topic-checkbox" id="arts" data-topic="arts">
+                    <div class="topic-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <label class="topic-label" for="arts">Arts & Music</label>
+                </li>
+                
+                <li class="topic-item" data-topic="tuition">
+                    <input type="checkbox" class="topic-checkbox" id="tuition" data-topic="tuition">
+                    <div class="topic-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <label class="topic-label" for="tuition">Tuition & Financial Aid</label>
+                </li>
+                
+                <li class="topic-item" data-topic="campus">
+                    <input type="checkbox" class="topic-checkbox" id="campus" data-topic="campus">
+                    <div class="topic-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <label class="topic-label" for="campus">Campus Life</label>
+                </li>
+                
+                <li class="topic-item" data-topic="admission">
+                    <input type="checkbox" class="topic-checkbox" id="admission" data-topic="admission">
+                    <div class="topic-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <label class="topic-label" for="admission">Admission Process</label>
+                </li>
+            </ul>
+            
+            <div class="sidebar-actions">
+                <button class="btn btn-primary" id="viewInfoBtn">View Selected Information</button>
+                <button class="btn btn-secondary" id="resetSelectionBtn">Reset Selection</button>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <div class="content-header">
+                <h2>Discover Divine Grace Academy</h2>
+                <p>Select topics of interest to view detailed information about our programs and community</p>
+            </div>
+            
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h2>Welcome to Our Information Center</h2>
+                <p>Choose the topics you're interested in from the sidebar, then click "View Selected Information" to see detailed information about each topic.</p>
+                <p>Our dedicated staff is here to help you learn everything you need to know about Divine Grace Academy.</p>
+            </div>
+            
+            <!-- Information Display -->
+            <div class="info-display" id="infoDisplay">
+                <div class="selected-topics-header">
+                    <h3>Your Selected Information</h3>
+                    <p>Here's everything you wanted to know about Divine Grace Academy</p>
+                </div>
+                
+                <div class="topics-grid" id="topicsGrid">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                
+                <div class="action-buttons" style="justify-content: center;">
+                    <button class="btn btn-primary" id="contactBtn">
+                        <i class="fas fa-envelope"></i> Contact Admissions
+                    </button>
+                    <button class="btn btn-secondary" id="backToSelectionBtn">
+                        <i class="fas fa-arrow-left"></i> Back to Selection
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Information Request System
+        const topicsList = document.getElementById('topicsList');
+        const viewInfoBtn = document.getElementById('viewInfoBtn');
+        const resetSelectionBtn = document.getElementById('resetSelectionBtn');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const infoDisplay = document.getElementById('infoDisplay');
+        const topicsGrid = document.getElementById('topicsGrid');
+        const contactBtn = document.getElementById('contactBtn');
+        const backToSelectionBtn = document.getElementById('backToSelectionBtn');
+
+        // Topic data
+        const topicData = {
+            academic: {
+                title: "Academic Programs",
+                icon: "fas fa-graduation-cap",
+                description: "Our comprehensive academic curriculum is designed to challenge and inspire students at every level.",
+                features: [
+                    "College-preparatory curriculum with AP courses",
+                    "STEM-focused programs with advanced labs",
+                    "Individualized learning plans for each student",
+                    "Dedicated college counseling starting in 9th grade",
+                    "Project-based learning and critical thinking focus"
+                ],
+                contactText: "Learn more about our academic programs"
+            },
+            athletics: {
+                title: "Athletics",
+                icon: "fas fa-running",
+                description: "We believe in developing the whole student, and our athletic programs play a key role in character development.",
+                features: [
+                    "15+ competitive sports teams",
+                    "State-of-the-art athletic facilities",
+                    "Emphasis on sportsmanship and teamwork",
+                    "Athletic scholarships available",
+                    "Certified trainers and coaches"
+                ],
+                contactText: "Ask about our athletic programs"
+            },
+            arts: {
+                title: "Arts & Music",
+                icon: "fas fa-paint-brush",
+                description: "Creative expression is celebrated through our comprehensive arts and music programs.",
+                features: [
+                    "Visual arts, theater, and music programs",
+                    "Annual school productions and art shows",
+                    "Private music lessons available",
+                    "Digital media and graphic design courses",
+                    "Partnerships with local arts organizations"
+                ],
+                contactText: "Explore our arts programs"
+            },
+            tuition: {
+                title: "Tuition & Financial Aid",
+                icon: "fas fa-dollar-sign",
+                description: "We are committed to making a Divine Grace Academy education accessible to qualified students.",
+                features: [
+                    "Competitive tuition rates with family discounts",
+                    "Need-based financial aid available",
+                    "Merit scholarships for academic excellence",
+                    "Flexible payment plans",
+                    "Transparent fee structure with no hidden costs"
+                ],
+                contactText: "Discuss tuition and financial aid options"
+            },
+            campus: {
+                title: "Campus Life",
+                icon: "fas fa-home",
+                description: "Our vibrant campus community offers numerous opportunities for growth, friendship, and discovery.",
+                features: [
+                    "40+ student clubs and organizations",
+                    "Leadership development programs",
+                    "Community service opportunities",
+                    "Modern dormitories for boarding students",
+                    "Safe, nurturing environment with 24/7 support"
+                ],
+                contactText: "Learn about campus life"
+            },
+            admission: {
+                title: "Admission Process",
+                icon: "fas fa-clipboard-list",
+                description: "Our admission process is designed to identify students who will thrive in our community.",
+                features: [
+                    "Rolling admissions with priority deadlines",
+                    "Personalized campus tours available",
+                    "Shadow days for prospective students",
+                    "Comprehensive application review process",
+                    "Dedicated admission counselors for each family"
+                ],
+                contactText: "Start the admission process"
+            }
+        };
+
+        // Topic selection handling
+        topicsList.addEventListener('click', function(e) {
+            const topicItem = e.target.closest('.topic-item');
+            if (topicItem) {
+                const checkbox = topicItem.querySelector('.topic-checkbox');
+                checkbox.checked = !checkbox.checked;
+                
+                if (checkbox.checked) {
+                    topicItem.classList.add('selected');
+                } else {
+                    topicItem.classList.remove('selected');
+                }
+            }
+        });
+
+        // View information button
+        viewInfoBtn.addEventListener('click', function() {
+            const selectedTopics = Array.from(document.querySelectorAll('.topic-checkbox:checked'))
+                .map(checkbox => checkbox.dataset.topic);
+            
+            if (selectedTopics.length === 0) {
+                alert('Please select at least one topic to view information.');
+                return;
+            }
+            
+            displaySelectedTopics(selectedTopics);
+            welcomeScreen.style.display = 'none';
+            infoDisplay.classList.add('active');
+        });
+
+        // Reset selection
+        resetSelectionBtn.addEventListener('click', function() {
+            document.querySelectorAll('.topic-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.querySelectorAll('.topic-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+        });
+
+        // Back to selection
+        backToSelectionBtn.addEventListener('click', function() {
+            infoDisplay.classList.remove('active');
+            welcomeScreen.style.display = 'block';
+        });
+
+        // Contact button
+        contactBtn.addEventListener('click', function() {
+            alert('Thank you for your interest! Our admissions team will contact you within 24 hours.');
+        });
+
+        // Display selected topics
+        function displaySelectedTopics(topics) {
+            topicsGrid.innerHTML = '';
+            
+            topics.forEach(topic => {
+                if (topicData[topic]) {
+                    const data = topicData[topic];
+                    const topicCard = document.createElement('div');
+                    topicCard.className = 'topic-card';
+                    topicCard.innerHTML = `
+                        <div class="topic-card-header">
+                            <div class="topic-card-icon">
+                                <i class="${data.icon}"></i>
+                            </div>
+                            <h3 class="topic-card-title">${data.title}</h3>
+                        </div>
+                        <div class="topic-content">
+                            <p>${data.description}</p>
+                            <ul class="topic-features">
+                                ${data.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+                            </ul>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-small contact-topic-btn" data-topic="${topic}">
+                                    <i class="fas fa-envelope"></i> ${data.contactText}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    topicsGrid.appendChild(topicCard);
+                }
+            });
+            
+            // Add event listeners to topic-specific contact buttons
+            document.querySelectorAll('.contact-topic-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const topic = this.dataset.topic;
+                    alert(`Thank you for your interest in our ${topicData[topic].title}! Our ${topic} department will contact you soon.`);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
