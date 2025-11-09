@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership - Divine Grace Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #f8b739;
+            --accent: #2c6e49;
+            --light: #f5f5f5;
+            --dark: #333;
+            --white: #ffffff;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --sidebar-bg: #f8f9fa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #3a7bd5;
+            --secondary: #ffc145;
+            --accent: #4caf50;
+            --light: #2d2d2d;
+            --dark: #f0f0f0;
+            --white: #121212;
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
+            --sidebar-bg: #2d2d2d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--light);
+            color: var(--dark);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 32px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-home {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-home:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--dark);
+            transition: var(--transition);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: rotate(15deg);
+        }
+
+        .dark-mode .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        .dark-mode .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        .dark-mode .theme-toggle .fa-sun {
+            display: block;
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 75, 140, 0.9), rgba(26, 75, 140, 0.8)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-color);
+            font-size: 18px;
+        }
+
+        /* Leadership Grid */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .leader-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .leader-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .leader-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .leader-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            color: white;
+        }
+
+        .leader-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .leader-position {
+            font-size: 16px;
+            opacity: 0.9;
+            color: var(--secondary);
+        }
+
+        .leader-content {
+            padding: 25px;
+        }
+
+        .leader-bio {
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .leader-qualifications {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .leader-qualifications li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .leader-qualifications i {
+            color: var(--accent);
+            margin-right: 10px;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        .leader-contact {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Department Sections */
+        .department-section {
+            margin-bottom: 80px;
+        }
+
+        .department-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .dark-mode .department-header {
+            border-bottom-color: #3d3d3d;
+        }
+
+        .department-header h3 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .department-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .department-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 28px;
+        }
+
+        .department-card h4 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .department-card p {
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        /* Board of Trustees */
+        .trustees-section {
+            background: var(--light);
+            padding: 80px 0;
+            margin-top: 40px;
+        }
+
+        .dark-mode .trustees-section {
+            background: #2d2d2d;
+        }
+
+        .trustees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .trustee-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .trustee-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .trustee-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 40px;
+        }
+
+        .trustee-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .trustee-role {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .trustee-company {
+            font-size: 14px;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        /* Mission & Vision */
+        .mission-vision {
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .mission-vision .section-title h2 {
+            color: white;
+        }
+
+        .mission-vision .section-title h2:after {
+            background-color: var(--secondary);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .value-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .value-card h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .header-actions {
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Divine Grace Academy</h1>
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" class="back-home">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Home
+                    </a>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Meet Our Leadership Team</h2>
+            <p>Dedicated educators and administrators committed to excellence in education</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Executive Leadership -->
+            <section class="section-title fade-in">
+                <h2>Executive Leadership</h2>
+                <p>Our visionary leaders guiding Divine Grace Academy towards educational excellence</p>
+            </section>
+
+            <div class="leadership-grid">
+                <!-- Head of School -->
+                <div class="leader-card fade-in">
+                    <div class="leader-image" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
+                        <div class="leader-overlay">
+                            <div class="leader-name">Dr. Sarah Johnson</div>
+                            <div class="leader-position">Head of School</div>
+                        </div>
+                    </div>
+                    <div class="leader-content">
+                        <p class="leader-bio">With over 20 years of experience in educational leadership, Dr. Johnson is committed to fostering an environment where every student can achieve their fullest potential.</p>
+                        <ul class="leader-qualifications">
+                            <li><i class="fas fa-check"></i> Ed.D. in Educational Leadership</li>
+                            <li><i class="fas fa-check"></i> 15+ Years as School Administrator</li>
+                            <li><i class="fas fa-check"></i> National Award for Educational Excellence</li>
+                        </ul>
+                        <div class="leader-contact">
+                            <a href="mailto:sjohnson@divinegrace.edu" class="btn btn-outline">
+                                <i class="fas fa-envelope"></i> Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Principal -->
+                <div class="leader-card fade-in">
+                    <div class="leader-image" style="background-image: url('https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
+                        <div class="leader-overlay">
+                            <div class="leader-name">Mr. Robert Chen</div>
+                            <div class="leader-position">Principal</div>
+                        </div>
+                    </div>
+                    <div class="leader-content">
+                        <p class="leader-bio">Mr. Chen brings innovative teaching methodologies and a passion for student development to his role as Principal of Divine Grace Academy.</p>
+                        <ul class="leader-qualifications">
+                            <li><i class="fas fa-check"></i> M.Ed. in School Administration</li>
+                            <li><i class="fas fa-check"></i> 12+ Years in Educational Leadership</li>
+                            <li><i class="fas fa-check"></i> Specialist in Curriculum Development</li>
+                        </ul>
+                        <div class="leader-contact">
+                            <a href="mailto:rchen@divinegrace.edu" class="btn btn-outline">
+                                <i class="fas fa-envelope"></i> Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Dean -->
+                <div class="leader-card fade-in">
+                    <div class="leader-image" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
+                        <div class="leader-overlay">
+                            <div class="leader-name">Dr. Maria Rodriguez</div>
+                            <div class="leader-position">Academic Dean</div>
+                        </div>
+                    </div>
+                    <div class="leader-content">
+                        <p class="leader-bio">Dr. Rodriguez oversees curriculum development and academic excellence, ensuring our programs meet the highest educational standards.</p>
+                        <ul class="leader-qualifications">
+                            <li><i class="fas fa-check"></i> Ph.D. in Curriculum & Instruction</li>
+                            <li><i class="fas fa-check"></i> Published Researcher in Education</li>
+                            <li><i class="fas fa-check"></i> 18+ Years in Academic Leadership</li>
+                        </ul>
+                        <div class="leader-contact">
+                            <a href="mailto:mrodriguez@divinegrace.edu" class="btn btn-outline">
+                                <i class="fas fa-envelope"></i> Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Department Heads -->
+            <section class="department-section fade-in">
+                <div class="department-header">
+                    <h3>Academic Department Heads</h3>
+                    <p>Expert educators leading our specialized academic programs</p>
+                </div>
+
+                <div class="department-grid">
+                    <div class="department-card">
+                        <div class="department-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h4>Science Department</h4>
+                        <p>Dr. James Wilson leads our STEM programs with a focus on hands-on learning and scientific inquiry.</p>
+                        <a href="mailto:jwilson@divinegrace.edu" class="btn btn-outline">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </div>
+
+                    <div class="department-card">
+                        <div class="department-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h4>Humanities</h4>
+                        <p>Ms. Elizabeth Parker oversees our English, History, and Social Studies curriculum.</p>
+                        <a href="mailto:eparker@divinegrace.edu" class="btn btn-outline">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </div>
+
+                    <div class="department-card">
+                        <div class="department-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h4>Mathematics</h4>
+                        <p>Mr. David Kim leads our mathematics department with innovative teaching approaches.</p>
+                        <a href="mailto:dkim@divinegrace.edu" class="btn btn-outline">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="mission-vision fade-in">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Our Leadership Philosophy</h2>
+                        <p>Guiding principles that shape our educational approach</p>
+                    </div>
+
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h4>Student-Centered</h4>
+                            <p>Every decision is made with our students' best interests at heart</p>
+                        </div>
+
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4>Innovation</h4>
+                            <p>Embracing new ideas and technologies to enhance learning</p>
+                        </div>
+
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h4>Collaboration</h4>
+                            <p>Working together with families and community partners</p>
+                        </div>
+
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>Excellence</h4>
+                            <p>Striving for the highest standards in everything we do</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Board of Trustees -->
+            <section class="trustees-section fade-in">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Board of Trustees</h2>
+                        <p>Community leaders guiding our strategic direction</p>
+                    </div>
+
+                    <div class="trustees-grid">
+                        <div class="trustee-card">
+                            <div class="trustee-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="trustee-name">Michael Thompson</div>
+                            <div class="trustee-role">Board Chair</div>
+                            <div class="trustee-company">Thompson Enterprises</div>
+                        </div>
+
+                        <div class="trustee-card">
+                            <div class="trustee-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="trustee-name">Dr. Lisa Park</div>
+                            <div class="trustee-role">Vice Chair</div>
+                            <div class="trustee-company">City University</div>
+                        </div>
+
+                        <div class="trustee-card">
+                            <div class="trustee-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="trustee-name">James Rodriguez</div>
+                            <div class="trustee-role">Treasurer</div>
+                            <div class="trustee-company">Financial Partners Inc.</div>
+                        </div>
+
+                        <div class="trustee-card">
+                            <div class="trustee-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="trustee-name">Sarah Williams</div>
+                            <div class="trustee-role">Secretary</div>
+                            <div class="trustee-company">Community Advocate</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Divine Grace Academy</h3>
+                    <p>Providing exceptional education in a nurturing environment since 1995. We are committed to developing the whole child - academically, socially, and emotionally.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="academics.html">Academics</a></li>
+                        <li><a href="admissions.html">Admissions</a></li>
+                        <li><a href="leadership.html">Leadership</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Education Lane, Learning City, LC 12345</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>admissions@divinegrace.edu</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 Divine Grace Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
