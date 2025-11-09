@@ -564,33 +564,9 @@
     margin-top: auto;
 }
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    text-align: center;
-    border: 2px solid;
-    font-size: 13px;
-    text-decoration: none;
-}
 
-.btn-primary {
-    background-color: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
 
-.btn-primary:hover {
-    background-color: transparent;
-    color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(26, 75, 140, 0.3);
-}
+
 
 /* Animations */
 @keyframes fadeIn {
