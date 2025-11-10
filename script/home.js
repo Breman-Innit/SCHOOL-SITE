@@ -247,3 +247,26 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(element);
     });
 });
+// DGA History & Mission Scroll Animations
+document.addEventListener('DOMContentLoaded', function() {
+    const dgaFadeElements = document.querySelectorAll('.dga-fade-element');
+    
+    const dgaObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    dgaFadeElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        dgaObserver.observe(element);
+    });
+});
