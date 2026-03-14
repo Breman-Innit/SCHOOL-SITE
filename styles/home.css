@@ -15,22 +15,6 @@
             --transition: all 0.3s ease;
         }
 
-        /* Dark Mode Variables */
-        .dark-mode {
-            --primary: #3a7bd5;
-            --secondary: #ffc145;
-            --accent: #4caf50;
-            --light: #2d2d2d;
-            --dark: #f0f0f0;
-            --white: #121212;
-            --bg-color: #121212;
-            --text-color: #f0f0f0;
-            --card-bg: #1e1e1e;
-            --header-bg: rgba(30, 30, 30, 0.95);
-            --footer-bg: #0a0a0a;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
         /* Reset and Base Styles */
         * {
             margin: 0;

@@ -130,50 +130,7 @@
                 }
             });
         });
-        
-        // Dark Mode Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-        
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            localStorage.setItem('darkMode', isDarkMode);
-            
-            // Update toggle icons
-            const icons = document.querySelectorAll('.theme-toggle i');
-            icons.forEach(icon => {
-                if (isDarkMode) {
-                    icon.classList.remove('fa-moon');
-                    icon.classList.add('fa-sun');
-                } else {
-                    icon.classList.remove('fa-sun');
-                    icon.classList.add('fa-moon');
-                }
-            });
-            
-            // Update mobile toggle text
-            if (mobileThemeToggle) {
-                mobileThemeToggle.innerHTML = isDarkMode ? 
-                    '<i class="fas fa-sun"></i> Light Mode' : 
-                    '<i class="fas fa-moon"></i> Dark Mode';
-            }
-        }
-        
-        themeToggle.addEventListener('click', toggleDarkMode);
-        mobileThemeToggle.addEventListener('click', toggleDarkMode);
-        
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-            const icons = document.querySelectorAll('.theme-toggle i');
-            icons.forEach(icon => {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            });
-            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
-        }
-        
+              
         // Animated Statistics Counter
         function animateCounter(element, start, end, duration, suffix = '') {
             let startTimestamp = null;
