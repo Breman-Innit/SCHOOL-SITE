@@ -14,19 +14,6 @@
             --transition: all 0.3s ease;
         }
 
-        .dark-mode {
-            --primary: #3a7bd5;
-            --secondary: #ffc145;
-            --accent: #4caf50;
-            --light: #2d2d2d;
-            --dark: #f0f0f0;
-            --white: #121212;
-            --bg-color: #121212;
-            --text-color: #f0f0f0;
-            --card-bg: #1e1e1e;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -39,6 +26,22 @@
             color: var(--text-color);
             line-height: 1.6;
             transition: var(--transition);
+        }
+
+        
+        .back-home {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-home:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
         }
 
         .container {
@@ -95,12 +98,6 @@
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        .nav-links a:hover {
-            background-color: rgba(0, 0, 0, 0.1);
         }
 
         .nav-links a.active {
@@ -108,42 +105,7 @@
             color: var(--dark);
         }
 
-        /* Dark Mode Toggle */
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--dark);
-            transition: var(--transition);
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
-        .theme-toggle:hover {
-            background-color: rgba(0, 0, 0, 0.1);
-            transform: rotate(15deg);
-        }
-
-        .dark-mode .theme-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .theme-toggle .fa-sun {
-            display: none;
-        }
-
-        .dark-mode .theme-toggle .fa-moon {
-            display: none;
-        }
-
-        .dark-mode .theme-toggle .fa-sun {
-            display: block;
-            color: var(--secondary);
-        }
 
         /* Hero Section */
       .hero {
@@ -301,9 +263,7 @@
             margin-bottom: 15px;
         }
 
-        .dark-mode .tour-duration {
-            background-color: #3d3d3d;
-        }
+
 
         /* Schedule Form */
         .schedule-form-container {
@@ -360,11 +320,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .dark-mode .form-group input, 
-        .dark-mode .form-group select,
-        .dark-mode .form-group textarea {
-            border-color: #444;
-        }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--primary);
@@ -484,9 +439,6 @@
             background-color: var(--light);
         }
 
-        .dark-mode .faq-question:hover {
-            background-color: #3d3d3d;
-        }
 
         .faq-answer {
             padding: 0 20px;

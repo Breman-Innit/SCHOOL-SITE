@@ -1,23 +1,3 @@
- // Dark Mode Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        // Check for saved theme preference or use OS preference
-        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
-        
-        // Apply the theme
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-        
-        // Toggle theme function
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            
-            // Save preference to localStorage
-            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
-        });
 
         // FAQ Toggle Functionality
         document.querySelectorAll('.faq-question').forEach(question => {

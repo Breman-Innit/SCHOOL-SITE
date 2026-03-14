@@ -852,17 +852,6 @@
     justify-content: center;
 }
 
-.program-image:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(26, 75, 140, 0.8), rgba(59, 59, 59, 0.6));
-    opacity: 0.8;
-    transition: var(--transition);
-}
 
 .program-card:hover .program-image:before {
     opacity: 0.9;
@@ -1146,7 +1135,40 @@
         .event-meta span {
             margin-right: 15px;
         }
+            .view_more_div{
+                display: flex;
+                justify-content:center;
+                margin-top: 20px;
+            }
 
+        .moreEvents_link {
+        padding: 14px 16px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .moreEvents_link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: white;
+        transition: width 0.3s ease;
+    }
+
+    .moreEvents_link:hover::after {
+        width: 100%;
+    }
+
+    .moreEvents_link:hover {
+        filter: brightness(105%);
+    }
         /* CTA Section */
         .cta {
             padding: 100px 0;
