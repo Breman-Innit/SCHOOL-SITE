@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/event.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -55,207 +52,9 @@
                 <button class="filter-btn" data-filter="featured">Featured</button>
             </div>
 
-            <!-- Events Grid -->
+            <!-- Events Grid - NOW EMPTY, WILL BE LOADED FROM FIREBASE -->
             <div class="events-grid" id="eventsGrid">
-                <!-- Event 1 -->
-                <div class="event-card featured fade-in" data-category="academic featured">
-                    <div class="event-badge">Featured</div>
-                    <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
-                        <div class="event-date">
-                            <span class="day">15</span>
-                            <span class="month">MAR</span>
-                        </div>
-                    </div>
-                    <div class="event-content">
-                        <span class="event-category">Academic</span>
-                        <h3 class="event-title">Annual Science Fair Exhibition</h3>
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>9:00 AM - 3:00 PM</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Science Building</span>
-                            </div>
-                        </div>
-                        <p class="event-description">Showcasing innovative student projects in robotics, environmental science, and biotechnology. Open to parents and community members.</p>
-                        <div class="event-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-calendar-plus"></i> Add to Calendar
-                            </button>
-                            <button class="btn btn-outline">
-                                <i class="fas fa-info-circle"></i> Learn More
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 2 -->
-                <div class="event-card fade-in" data-category="sports">
-                    <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
-                        <div class="event-date">
-                            <span class="day">22</span>
-                            <span class="month">MAR</span>
-                        </div>
-                    </div>
-                    <div class="event-content">
-                        <span class="event-category">Sports</span>
-                        <h3 class="event-title">Spring Soccer Tournament</h3>
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>10:00 AM - 5:00 PM</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Main Athletic Field</span>
-                            </div>
-                        </div>
-                        <p class="event-description">Annual inter-school soccer competition featuring teams from across the region. Come support our Eagles!</p>
-                        <div class="event-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-calendar-plus"></i> Add to Calendar
-                            </button>
-                            <button class="btn btn-outline">
-                                <i class="fas fa-ticket-alt"></i> Get Tickets
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 3 -->
-                <div class="event-card fade-in" data-category="arts">
-                    <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1503095396549-807759245b35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
-                        <div class="event-date">
-                            <span class="day">05</span>
-                            <span class="month">APR</span>
-                        </div>
-                    </div>
-                    <div class="event-content">
-                        <span class="event-category">Arts & Culture</span>
-                        <h3 class="event-title">Spring Musical: "The Sound of Music"</h3>
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>7:00 PM - 9:30 PM</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Performing Arts Center</span>
-                            </div>
-                        </div>
-                        <p class="event-description">Our talented students present this beloved classic. Multiple performances throughout the week.</p>
-                        <div class="event-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-calendar-plus"></i> Add to Calendar
-                            </button>
-                            <button class="btn btn-outline">
-                                <i class="fas fa-ticket-alt"></i> Get Tickets
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 4 -->
-                <div class="event-card fade-in" data-category="community">
-                    <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
-                        <div class="event-date">
-                            <span class="day">12</span>
-                            <span class="month">APR</span>
-                        </div>
-                    </div>
-                    <div class="event-content">
-                        <span class="event-category">Community</span>
-                        <h3 class="event-title">Family Fun Day & Campus Picnic</h3>
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>11:00 AM - 4:00 PM</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Main Quadrangle</span>
-                            </div>
-                        </div>
-                        <p class="event-description">A day of games, food, and community bonding for students, families, and staff. Bring your picnic blankets!</p>
-                        <div class="event-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-calendar-plus"></i> Add to Calendar
-                            </button>
-                            <button class="btn btn-outline">
-                                <i class="fas fa-utensils"></i> Food Sign-up
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 5 -->
-                <div class="event-card fade-in" data-category="academic">
-                    <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
-                        <div class="event-date">
-                            <span class="day">18</span>
-                            <span class="month">APR</span>
-                        </div>
-                    </div>
-                    <div class="event-content">
-                        <span class="event-category">Academic</span>
-                        <h3 class="event-title">College Preparation Workshop</h3>
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>6:00 PM - 8:00 PM</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Library Conference Room</span>
-                            </div>
-                        </div>
-                        <p class="event-description">Essential guidance for juniors and seniors on college applications, essays, and financial aid planning.</p>
-                        <div class="event-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-calendar-plus"></i> Add to Calendar
-                            </button>
-                            <button class="btn btn-outline">
-                                <i class="fas fa-user-plus"></i> Register
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 6 -->
-                <div class="event-card featured fade-in" data-category="arts featured">
-                    <div class="event-badge">Featured</div>
-                    <div class="event-image" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');">
-                        <div class="event-date">
-                            <span class="day">25</span>
-                            <span class="month">APR</span>
-                        </div>
-                    </div>
-                    <div class="event-content">
-                        <span class="event-category">Arts & Culture</span>
-                        <h3 class="event-title">Spring Art Show & Gallery Opening</h3>
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <span>5:00 PM - 8:00 PM</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Art Gallery</span>
-                            </div>
-                        </div>
-                        <p class="event-description">Exhibition of student artwork from all grade levels. Refreshments served. Open to the public.</p>
-                        <div class="event-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-calendar-plus"></i> Add to Calendar
-                            </button>
-                            <button class="btn btn-outline">
-                                <i class="fas fa-info-circle"></i> Learn More
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <!-- Events will be loaded dynamically from Firebase -->
             </div>
 
             <!-- Calendar Section -->
@@ -453,8 +252,180 @@
         </div>
     </footer>
 
-    <script src="script/events.js">
-     
+    <!-- Firebase SDKs -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+            }
+        }
     </script>
+
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from 'firebase/app';
+        import { getFirestore, collection, getDocs } from 'firebase/firestore';
+        
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
+            authDomain: "divine-grace-academy.firebaseapp.com",
+            projectId: "divine-grace-academy",
+            storageBucket: "divine-grace-academy.firebasestorage.app",
+            messagingSenderId: "84424080855",
+            appId: "1:84424080855:web:0d2d58926ada950a101f92"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        console.log("Firebase connected successfully! 🚀");
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // ===========================================
+        // LOAD EVENTS FROM FIREBASE
+        // ===========================================
+        const eventsGrid = document.getElementById('eventsGrid');
+
+        async function loadEvents() {
+            try {
+                // Show loading
+                eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>';
+                
+                // Get events from Firestore
+                const querySnapshot = await getDocs(collection(db, 'events'));
+                
+                // Clear loading
+                eventsGrid.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;">No events found. Add some in Firebase!</div>';
+                    return;
+                }
+                
+                // Loop through events and create cards
+                querySnapshot.forEach((doc) => {
+                    const event = doc.data();
+                    
+                    // Create event card HTML
+                    const eventCard = `
+                        <div class="event-card ${event.featured ? 'featured' : ''} fade-in" data-category="${event.category || 'general'}">
+                            ${event.featured ? '<div class="event-badge">Featured</div>' : ''}
+                            <div class="event-image" style="background-image: url('${event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}');">
+                                <div class="event-date">
+                                    <span class="day">${event.day || '15'}</span>
+                                    <span class="month">${event.month || 'MAR'}</span>
+                                </div>
+                            </div>
+                            <div class="event-content">
+                                <span class="event-category">${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
+                                <h3 class="event-title">${event.title || 'Untitled Event'}</h3>
+                                <div class="event-meta">
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>${event.time || 'Time TBD'}</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>${event.location || 'Location TBD'}</span>
+                                    </div>
+                                </div>
+                                <p class="event-description">${event.description || 'No description available.'}</p>
+                                <div class="event-actions">
+                                    <button class="btn btn-primary add-to-calendar">
+                                        <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                    </button>
+                                    <button class="btn btn-outline learn-more">
+                                        <i class="fas fa-info-circle"></i> Learn More
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    eventsGrid.innerHTML += eventCard;
+                });
+                
+                // Re-attach filter listeners
+                attachFilterListeners();
+                
+                // Re-attach calendar button listeners
+                attachCalendarListeners();
+                
+            } catch (error) {
+                console.error("Error loading events:", error);
+                eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> Error loading events. Check console.</div>';
+            }
+        }
+
+        function attachFilterListeners() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const eventCards = document.querySelectorAll('.event-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    eventCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const cardCategory = card.getAttribute('data-category');
+                            if (cardCategory && cardCategory.includes(filterValue)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        }
+
+        function attachCalendarListeners() {
+            document.querySelectorAll('.add-to-calendar').forEach(button => {
+                button.addEventListener('click', function() {
+                    const eventCard = this.closest('.event-card');
+                    const eventTitle = eventCard.querySelector('.event-title').textContent;
+                    alert(`"${eventTitle}" has been added to your calendar!`);
+                });
+            });
+        }
+
+        // Load events when page loads
+        document.addEventListener('DOMContentLoaded', loadEvents);
+
+        // Newsletter form
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('.newsletter-input').value;
+                alert(`Thank you for subscribing with ${email}!`);
+                this.reset();
+            });
+        }
+    </script>
+    <script src="script/events.js"></script>
 </body>
 </html>
