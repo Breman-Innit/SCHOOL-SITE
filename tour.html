@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/tour.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
- 
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -21,11 +18,12 @@
                     <h1>Divine Grace Academy</h1>
                 </div>
                 <ul class="nav-links">
-                    <li>  
-                         <a href="index.html" class="back-home">
-                        <i class="fas fa-arrow-left"></i>
-                        Back to Home
-                         </a>
+                    <li><a href="index.html">Back to Home</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" style="display: none;">
+                            <i class="fas fa-moon"></i>
+                            <i class="fas fa-sun"></i>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -326,7 +324,7 @@
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="academics.html">Academics</a></li>
                         <li><a href="admissions.html">Admissions</a></li>
-                        <li><a href="schedule-tour.html">Schedule a Tour</a></li>
+                        <li><a href="tour.html">Schedule a Tour</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
@@ -360,8 +358,107 @@
         </div>
     </footer>
 
-    <script src="script/tour.js">
-       
+    <!-- Firebase SDKs (v8 - simpler) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
+            authDomain: "divine-grace-academy.firebaseapp.com",
+            projectId: "divine-grace-academy",
+            storageBucket: "divine-grace-academy.firebasestorage.app",
+            messagingSenderId: "84424080855",
+            appId: "1:84424080855:web:0d2d58926ada950a101f92"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        console.log("Tour page Firebase connected!");
+        
+        // Make db available for tour.js
+        window.db = db;
+    </script>
+
+    <!-- FAQ Toggle Script -->
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Set minimum date for tour scheduling to today
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        const dateInput = document.getElementById('preferredDate');
+        if (dateInput) {
+            dateInput.min = formattedDate;
+        }
+
+        // Tour Form Submission
+        const tourForm = document.getElementById('tourForm');
+        
+        if (tourForm) {
+            tourForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = {
+                    firstName: document.getElementById('firstName')?.value || '',
+                    lastName: document.getElementById('lastName')?.value || '',
+                    email: document.getElementById('email')?.value || '',
+                    phone: document.getElementById('phone')?.value || '',
+                    studentName: document.getElementById('studentName')?.value || '',
+                    tourType: document.getElementById('tourType')?.value || '',
+                    preferredDate: document.getElementById('preferredDate')?.value || '',
+                    preferredTime: document.getElementById('preferredTime')?.value || '',
+                    hearAbout: document.getElementById('hearAbout')?.value || '',
+                    questions: document.getElementById('questions')?.value || '',
+                    newsletter: document.getElementById('newsletter')?.checked || false,
+                    timestamp: new Date().toLocaleString(),
+                    status: 'pending'
+                };
+                
+                // Validate required fields
+                if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.studentName || !formData.tourType || !formData.preferredDate || !formData.preferredTime || !formData.hearAbout) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = tourForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Save to Firebase
+                    await db.collection('tourRequests').add(formData);
+                    
+                    // Success message
+                    alert('Thank you for your tour request! Our admissions team will contact you within 24-48 hours to confirm your tour details.');
+                    
+                    // Reset form
+                    tourForm.reset();
+                    
+                    // Scroll to top
+                    document.getElementById('schedule-form').scrollIntoView({ behavior: 'smooth' });
+                    
+                } catch (error) {
+                    console.error('Error saving tour request:', error);
+                    alert('There was an error submitting your request. Please try again or contact us directly.');
+                } finally {
+                    // Restore button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
     </script>
 </body>
 </html>
