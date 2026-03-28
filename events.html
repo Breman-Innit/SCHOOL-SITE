@@ -5,11 +5,618 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Events - Divine Grace Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles/event.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #f8b739;
+            --accent: #2c6e49;
+            --light: #f5f5f5;
+            --dark: #333;
+            --white: #ffffff;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --footer-bg: #1a1a1a;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--light);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 32px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .back-home {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-home:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 75, 140, 0.9), rgba(26, 75, 140, 0.8)), url('https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-color);
+            font-size: 18px;
+        }
+
+        /* Events Filter */
+        .events-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-card.featured {
+            border: 3px solid var(--secondary);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .event-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .event-date {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .event-date .day {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 14px;
+            display: block;
+        }
+
+        .event-content {
+            padding: 25px;
+        }
+
+        .event-category {
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .event-title {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .event-meta-item i {
+            color: var(--primary);
+        }
+
+        .event-description {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: var(--light);
+            padding: 80px 0;
+            margin-top: 40px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .current-month {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .calendar-day-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .calendar-day {
+            background: var(--card-bg);
+            padding: 15px;
+            min-height: 120px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+
+        .calendar-day.empty {
+            background: var(--light);
+            opacity: 0.5;
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .calendar-event {
+            background: var(--accent);
+            color: white;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-bottom: 3px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .calendar-event:hover {
+            background: var(--primary);
+        }
+
+        /* Timeline */
+        .upcoming-events {
+            margin-top: 60px;
+        }
+
+        .events-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-date {
+            width: 80px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .timeline-day {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .timeline-month {
+            font-size: 14px;
+            color: var(--text-color);
+            text-transform: uppercase;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            flex: 1;
+        }
+
+        .timeline-content h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border-color: var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 32px; }
+            .calendar-day { min-height: 80px; padding: 8px; }
+            .calendar-event { font-size: 9px; }
+            .timeline-item { flex-direction: column; }
+            .timeline-date { margin-bottom: 10px; text-align: left; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -19,15 +626,13 @@
                 </div>
                 <div class="header-actions">
                     <a href="index.html" class="back-home">
-                        <i class="fas fa-arrow-left"></i>
-                        Back to Home
+                        <i class="fas fa-arrow-left"></i> Back to Home
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h2>Campus Events & Activities</h2>
@@ -35,7 +640,6 @@
         </div>
     </section>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="container">
             <!-- Events Filter -->
@@ -48,127 +652,49 @@
                 <button class="filter-btn" data-filter="featured">Featured</button>
             </div>
 
-            <!-- Events Grid - NOW EMPTY, WILL BE LOADED FROM FIREBASE -->
+            <!-- Events Grid -->
             <div class="events-grid" id="eventsGrid">
-                <!-- Events will be loaded dynamically from Firebase -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                    <i class="fas fa-spinner fa-spin"></i> Loading events...
+                </div>
             </div>
 
-            <!-- Calendar Section -->
-            <section class="calendar-section fade-in">
+            <!-- Dynamic Calendar Section -->
+            <section class="calendar-section">
                 <div class="container">
                     <div class="section-title">
                         <h2>Events Calendar</h2>
-                        <p>Plan ahead with our comprehensive monthly calendar</p>
+                        <p>Click on any event to view details</p>
                     </div>
 
                     <div class="calendar-header">
-                        <h3>March 2024</h3>
+                        <h3 class="current-month" id="currentMonth">March 2024</h3>
                         <div class="calendar-nav">
-                            <button class="btn btn-outline">
+                            <button class="btn btn-outline" id="prevMonthBtn">
                                 <i class="fas fa-chevron-left"></i> Previous
                             </button>
-                            <button class="btn btn-outline">
+                            <button class="btn btn-outline" id="nextMonthBtn">
                                 Next <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="calendar-grid">
-                        <div class="calendar-day-header">Sun</div>
-                        <div class="calendar-day-header">Mon</div>
-                        <div class="calendar-day-header">Tue</div>
-                        <div class="calendar-day-header">Wed</div>
-                        <div class="calendar-day-header">Thu</div>
-                        <div class="calendar-day-header">Fri</div>
-                        <div class="calendar-day-header">Sat</div>
-
-                        <!-- Calendar days would be dynamically generated in a real implementation -->
-                        <div class="calendar-day empty">26</div>
-                        <div class="calendar-day empty">27</div>
-                        <div class="calendar-day empty">28</div>
-                        <div class="calendar-day empty">29</div>
-                        <div class="calendar-day">1</div>
-                        <div class="calendar-day">2</div>
-                        <div class="calendar-day">3</div>
-                        <div class="calendar-day">4</div>
-                        <div class="calendar-day">5</div>
-                        <div class="calendar-day">6</div>
-                        <div class="calendar-day">7</div>
-                        <div class="calendar-day">8</div>
-                        <div class="calendar-day">9</div>
-                        <div class="calendar-day">10</div>
-                        <div class="calendar-day">11</div>
-                        <div class="calendar-day">12</div>
-                        <div class="calendar-day">13</div>
-                        <div class="calendar-day">14</div>
-                        <div class="calendar-day">15
-                            <div class="calendar-event">Science Fair</div>
-                        </div>
-                        <div class="calendar-day">16</div>
-                        <div class="calendar-day">17</div>
-                        <div class="calendar-day">18</div>
-                        <div class="calendar-day">19</div>
-                        <div class="calendar-day">20</div>
-                        <div class="calendar-day">21</div>
-                        <div class="calendar-day">22
-                            <div class="calendar-event">Soccer Tournament</div>
-                        </div>
-                        <div class="calendar-day">23</div>
-                        <div class="calendar-day">24</div>
-                        <div class="calendar-day">25</div>
-                        <div class="calendar-day">26</div>
-                        <div class="calendar-day">27</div>
-                        <div class="calendar-day">28</div>
-                        <div class="calendar-day">29</div>
-                        <div class="calendar-day">30</div>
-                        <div class="calendar-day">31</div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar will be generated dynamically -->
                     </div>
                 </div>
             </section>
 
-            <!-- Upcoming Events Timeline -->
-            <section class="upcoming-events fade-in">
+            <!-- Dynamic Timeline -->
+            <section class="upcoming-events">
                 <div class="container">
                     <div class="section-title">
                         <h2>Upcoming Events Timeline</h2>
                         <p>Never miss an important campus event</p>
                     </div>
-
-                    <div class="events-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date">
-                                <div class="timeline-day">15</div>
-                                <div class="timeline-month">MAR</div>
-                            </div>
-                            <div class="timeline-content">
-                                <h4>Annual Science Fair Exhibition</h4>
-                                <p>Science Building • 9:00 AM - 3:00 PM</p>
-                                <p>Student projects showcase innovation in various scientific fields.</p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="timeline-date">
-                                <div class="timeline-day">22</div>
-                                <div class="timeline-month">MAR</div>
-                            </div>
-                            <div class="timeline-content">
-                                <h4>Spring Soccer Tournament</h4>
-                                <p>Main Athletic Field • 10:00 AM - 5:00 PM</p>
-                                <p>Cheer for our Eagles in this exciting inter-school competition.</p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="timeline-date">
-                                <div class="timeline-day">05</div>
-                                <div class="timeline-month">APR</div>
-                            </div>
-                            <div class="timeline-content">
-                                <h4>Spring Musical: "The Sound of Music"</h4>
-                                <p>Performing Arts Center • 7:00 PM - 9:30 PM</p>
-                                <p>Multiple performances of this beloved classic throughout the week.</p>
-                            </div>
+                    <div class="events-timeline" id="timelineContainer">
+                        <div style="text-align: center; padding: 40px;">
+                            <i class="fas fa-spinner fa-spin"></i> Loading timeline...
                         </div>
                     </div>
                 </div>
@@ -177,12 +703,12 @@
     </main>
 
     <!-- Newsletter Section -->
-    <section class="newsletter-section fade-in">
+    <section class="newsletter-section">
         <div class="container">
             <div class="newsletter-content">
                 <h2>Stay Updated</h2>
                 <p>Subscribe to our events newsletter and never miss an important campus activity</p>
-                <form class="newsletter-form">
+                <form class="newsletter-form" id="newsletterForm">
                     <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
                     <button type="submit" class="btn btn-secondary">
                         <i class="fas fa-paper-plane"></i> Subscribe
@@ -198,7 +724,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Divine Grace Academy</h3>
-                    <p>Providing exceptional education in a nurturing environment since 1995. We are committed to developing the whole child - academically, socially, and emotionally.</p>
+                    <p>Providing exceptional education in a nurturing environment since 1995.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -206,64 +732,35 @@
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="academics.html">Academics</a></li>
-                        <li><a href="admissions.html">Admissions</a></li>
                         <li><a href="events.html">Campus Events</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="tour.html">Schedule a Tour</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-column">
                     <h3>Contact Info</h3>
                     <ul class="contact-info">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>123 Education Lane, Learning City, LC 12345</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>(555) 123-4567</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>events@divinegrace.edu</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
-                        </li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Learning City</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> events@divinegrace.edu</li>
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
-                <p>&copy; 2023 Divine Grace Academy. All rights reserved.</p>
+                <p>&copy; 2024 Divine Grace Academy. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase SDKs -->
-    <script type="importmap">
-        {
-            "imports": {
-                "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
-            }
-        }
-    </script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-    <script type="module">
-        // Import Firebase
-        import { initializeApp } from 'firebase/app';
-        import { getFirestore, collection, getDocs } from 'firebase/firestore';
-        
-        // Your Firebase configuration
+    <script>
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
             authDomain: "divine-grace-academy.firebaseapp.com",
@@ -272,89 +769,89 @@
             messagingSenderId: "84424080855",
             appId: "1:84424080855:web:0d2d58926ada950a101f92"
         };
-        
+
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        
-        console.log("Firebase connected successfully! 🚀");
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        // ===========================================
-        // LOAD EVENTS FROM FIREBASE
-        // ===========================================
-        const eventsGrid = document.getElementById('eventsGrid');
+        // Global variables
+        let allEvents = [];
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
 
-        async function loadEvents() {
+        // Month names
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        // Load all events from Firebase
+        async function loadAllEvents() {
             try {
-                // Show loading
-                eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>';
-                
-                // Get events from Firestore
-                const querySnapshot = await getDocs(collection(db, 'events'));
-                
-                // Clear loading
-                eventsGrid.innerHTML = '';
-                
-                if (querySnapshot.empty) {
-                    eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;">No events found. Add some in Firebase!</div>';
-                    return;
-                }
-                
-                // Loop through events and create cards
-                querySnapshot.forEach((doc) => {
-                    const event = doc.data();
-                    
-                    // Create event card HTML
-                    const eventCard = `
-                        <div class="event-card ${event.featured ? 'featured' : ''} fade-in" data-category="${event.category || 'general'}">
-                            ${event.featured ? '<div class="event-badge">Featured</div>' : ''}
-                            <div class="event-image" style="background-image: url('${event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}');">
-                                <div class="event-date">
-                                    <span class="day">${event.day || '15'}</span>
-                                    <span class="month">${event.month || 'MAR'}</span>
-                                </div>
-                            </div>
-                            <div class="event-content">
-                                <span class="event-category">${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
-                                <h3 class="event-title">${event.title || 'Untitled Event'}</h3>
-                                <div class="event-meta">
-                                    <div class="event-meta-item">
-                                        <i class="fas fa-clock"></i>
-                                        <span>${event.time || 'Time TBD'}</span>
-                                    </div>
-                                    <div class="event-meta-item">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span>${event.location || 'Location TBD'}</span>
-                                    </div>
-                                </div>
-                                <p class="event-description">${event.description || 'No description available.'}</p>
-                                <div class="event-actions">
-                                    <button class="btn btn-primary add-to-calendar">
-                                        <i class="fas fa-calendar-plus"></i> Add to Calendar
-                                    </button>
-                                    <button class="btn btn-outline learn-more">
-                                        <i class="fas fa-info-circle"></i> Learn More
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    eventsGrid.innerHTML += eventCard;
+                const querySnapshot = await db.collection('events').get();
+                allEvents = [];
+                querySnapshot.forEach(doc => {
+                    allEvents.push({ id: doc.id, ...doc.data() });
                 });
                 
-                // Re-attach filter listeners
-                attachFilterListeners();
+                // Display events grid
+                displayEventsGrid();
                 
-                // Re-attach calendar button listeners
-                attachCalendarListeners();
+                // Render calendar with current month
+                renderCalendar(currentYear, currentMonth);
+                
+                // Render timeline
+                renderTimeline();
                 
             } catch (error) {
                 console.error("Error loading events:", error);
-                eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> Error loading events. Check console.</div>';
+                document.getElementById('eventsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: red;">Error loading events</div>';
             }
         }
 
+        // Display events grid
+        function displayEventsGrid() {
+            const eventsGrid = document.getElementById('eventsGrid');
+            
+            if (allEvents.length === 0) {
+                eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;">No events found. Add some in Firebase!</div>';
+                return;
+            }
+
+            eventsGrid.innerHTML = '';
+            
+            allEvents.forEach(event => {
+                const card = `
+                    <div class="event-card ${event.featured ? 'featured' : ''}" data-category="${event.category || 'general'}">
+                        ${event.featured ? '<div class="event-badge">Featured</div>' : ''}
+                        <div class="event-image" style="background-image: url('${event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}');">
+                            <div class="event-date">
+                                <span class="day">${event.day || event.date?.split('-')[2] || '15'}</span>
+                                <span class="month">${event.month || (event.date ? new Date(event.date).toLocaleString('default', { month: 'short' }).toUpperCase() : 'MAR')}</span>
+                            </div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-category">${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
+                            <h3 class="event-title">${event.title || 'Untitled'}</h3>
+                            <div class="event-meta">
+                                <div class="event-meta-item"><i class="fas fa-clock"></i> ${event.time || 'Time TBD'}</div>
+                                <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</div>
+                            </div>
+                            <p class="event-description">${event.description || 'No description available.'}</p>
+                            <div class="event-actions">
+                                <button class="btn btn-primary" onclick="alert('Added to calendar: ${event.title}')">
+                                    <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                eventsGrid.innerHTML += card;
+            });
+            
+            // Attach filter listeners
+            attachFilterListeners();
+        }
+
+        // Filter functionality
         function attachFilterListeners() {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const eventCards = document.querySelectorAll('.event-card');
@@ -373,6 +870,8 @@
                             const cardCategory = card.getAttribute('data-category');
                             if (cardCategory && cardCategory.includes(filterValue)) {
                                 card.style.display = 'block';
+                            } else if (filterValue === 'featured' && card.classList.contains('featured')) {
+                                card.style.display = 'block';
                             } else {
                                 card.style.display = 'none';
                             }
@@ -382,30 +881,161 @@
             });
         }
 
-        function attachCalendarListeners() {
-            document.querySelectorAll('.add-to-calendar').forEach(button => {
-                button.addEventListener('click', function() {
-                    const eventCard = this.closest('.event-card');
-                    const eventTitle = eventCard.querySelector('.event-title').textContent;
-                    alert(`"${eventTitle}" has been added to your calendar!`);
+        // Render calendar
+        function renderCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startingDayOfWeek = firstDay.getDay();
+            const daysInMonth = lastDay.getDate();
+            
+            // Update header
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            // Get events for this month
+            const eventsThisMonth = allEvents.filter(event => {
+                if (event.date) {
+                    const eventDate = new Date(event.date);
+                    return eventDate.getMonth() === month && eventDate.getFullYear() === year;
+                }
+                return false;
+            });
+            
+            // Create calendar grid
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+            
+            // Day headers
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayNames.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                calendarGrid.appendChild(header);
+            });
+            
+            // Empty cells for days before month starts
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Fill in days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                dayCell.appendChild(dayNumber);
+                
+                // Add events for this day
+                const eventsOnDay = eventsThisMonth.filter(event => {
+                    const eventDay = new Date(event.date).getDate();
+                    return eventDay === day;
                 });
+                
+                eventsOnDay.forEach(event => {
+                    const eventBadge = document.createElement('div');
+                    eventBadge.className = 'calendar-event';
+                    eventBadge.textContent = event.title.length > 20 ? event.title.substring(0, 18) + '...' : event.title;
+                    eventBadge.title = event.title;
+                    eventBadge.onclick = () => alert(`${event.title}\n${event.time || 'Time TBD'}\n${event.location || 'Location TBD'}\n\n${event.description || ''}`);
+                    dayCell.appendChild(eventBadge);
+                });
+                
+                calendarGrid.appendChild(dayCell);
+            }
+            
+            // Fill remaining cells
+            const totalCells = startingDayOfWeek + daysInMonth;
+            const remainingCells = 42 - totalCells;
+            for (let i = 0; i < remainingCells; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+        }
+
+        // Render timeline (all upcoming events)
+        function renderTimeline() {
+            const timelineContainer = document.getElementById('timelineContainer');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Filter events with valid dates that are today or future
+            const upcomingEvents = allEvents
+                .filter(event => {
+                    if (!event.date) return false;
+                    const eventDate = new Date(event.date);
+                    return eventDate >= today;
+                })
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .slice(0, 10); // Show top 10 upcoming events
+            
+            if (upcomingEvents.length === 0) {
+                timelineContainer.innerHTML = '<div style="text-align: center; padding: 40px;">No upcoming events scheduled.</div>';
+                return;
+            }
+            
+            timelineContainer.innerHTML = '';
+            
+            upcomingEvents.forEach(event => {
+                const eventDate = new Date(event.date);
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+                
+                const timelineItem = `
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <div class="timeline-day">${event.day || day}</div>
+                            <div class="timeline-month">${event.month || month}</div>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>${event.title || 'Untitled Event'}</h4>
+                            <p>${event.location || 'Location TBD'} • ${event.time || 'Time TBD'}</p>
+                            <p>${event.description ? event.description.substring(0, 100) + '...' : ''}</p>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.innerHTML += timelineItem;
             });
         }
 
-        // Load events when page loads
-        document.addEventListener('DOMContentLoaded', loadEvents);
+        // Month navigation
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+        
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
 
         // Newsletter form
-        const newsletterForm = document.querySelector('.newsletter-form');
-        if (newsletterForm) {
-            newsletterForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = this.querySelector('.newsletter-input').value;
-                alert(`Thank you for subscribing with ${email}!`);
-                this.reset();
-            });
-        }
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            alert(`Thank you for subscribing with ${email}!`);
+            this.reset();
+        });
+
+        // Event listeners for month navigation
+        document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
+        document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
+
+        // Load everything on page load
+        document.addEventListener('DOMContentLoaded', loadAllEvents);
     </script>
-    <script src="script/events.js"></script>
 </body>
 </html>
