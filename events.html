@@ -303,10 +303,47 @@
             gap: 15px;
         }
 
+        .calendar-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         .current-month {
             font-size: 28px;
             font-weight: 700;
             color: var(--primary);
+        }
+
+        /* Month Selector Dropdown */
+        .month-selector {
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .month-selector:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .month-selector:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(248, 183, 57, 0.3);
+        }
+
+        /* Month with events badge indicator in dropdown */
+        .month-with-events {
+            position: relative;
         }
 
         .calendar-nav {
@@ -314,7 +351,6 @@
             gap: 10px;
         }
 
-        /* Fixed Button Styles */
         .btn-outline {
             display: inline-flex;
             align-items: center;
@@ -549,7 +585,6 @@
             box-shadow: 0 0 0 2px var(--secondary);
         }
 
-        /* Subscribe Button */
         .btn-secondary {
             display: inline-flex;
             align-items: center;
@@ -693,6 +728,8 @@
             .timeline-date { margin-bottom: 8px; text-align: left; width: auto; display: flex; gap: 8px; align-items: baseline; }
             .timeline-day { font-size: 22px; }
             .btn-outline, .btn-secondary { padding: 8px 16px; font-size: 12px; }
+            .calendar-controls { flex-direction: column; align-items: stretch; }
+            .month-selector { width: 100%; }
         }
     </style>
 </head>
@@ -739,18 +776,23 @@
                 <div class="container">
                     <div class="section-title">
                         <h2>📅 Events Calendar</h2>
-                        <p>Hover over any event badge to see details • Click to view all events for that day</p>
+                        <p>Hover over any event badge to see details • Click to view all events for that day • Use the dropdown to jump to months with events</p>
                     </div>
 
                     <div class="calendar-header">
                         <h3 class="current-month" id="currentMonth">March 2024</h3>
-                        <div class="calendar-nav">
-                            <button class="btn-outline" id="prevMonthBtn">
-                                <i class="fas fa-chevron-left"></i> Previous
-                            </button>
-                            <button class="btn-outline" id="nextMonthBtn">
-                                Next <i class="fas fa-chevron-right"></i>
-                            </button>
+                        <div class="calendar-controls">
+                            <select id="monthSelector" class="month-selector">
+                                <option value="">-- Select Month --</option>
+                            </select>
+                            <div class="calendar-nav">
+                                <button class="btn-outline" id="prevMonthBtn">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <button class="btn-outline" id="nextMonthBtn">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -845,6 +887,7 @@
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth();
         let currentYear = currentDate.getFullYear();
+        let monthsWithEvents = new Set(); // Track which months have events
 
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -852,14 +895,22 @@
             try {
                 const querySnapshot = await db.collection('events').get();
                 allEvents = [];
+                monthsWithEvents.clear();
+                
                 querySnapshot.forEach(doc => {
                     const eventData = doc.data();
                     if (eventData.date) {
                         allEvents.push({ id: doc.id, ...eventData });
+                        // Track months with events
+                        const eventDate = new Date(eventData.date);
+                        if (!isNaN(eventDate.getTime())) {
+                            monthsWithEvents.add(`${eventDate.getFullYear()}-${eventDate.getMonth()}`);
+                        }
                     }
                 });
                 
                 displayEventsGrid();
+                populateMonthSelector();
                 renderCalendar(currentYear, currentMonth);
                 renderTimeline();
                 
@@ -867,6 +918,39 @@
                 console.error("Error:", error);
                 document.getElementById('eventsGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: red;">Error loading events</div>';
             }
+        }
+
+        function populateMonthSelector() {
+            const selector = document.getElementById('monthSelector');
+            selector.innerHTML = '<option value="">📅 Jump to month with events</option>';
+            
+            // Get unique months with events and sort them
+            const sortedMonths = Array.from(monthsWithEvents).sort();
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthNum = parseInt(month);
+                const monthName = monthNames[monthNum];
+                const eventCount = allEvents.filter(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate.getFullYear() === parseInt(year) && eventDate.getMonth() === monthNum;
+                }).length;
+                
+                const option = document.createElement('option');
+                option.value = monthKey;
+                option.textContent = `${monthName} ${year} (${eventCount} event${eventCount !== 1 ? 's' : ''}) 🎉`;
+                selector.appendChild(option);
+            });
+            
+            if (sortedMonths.length === 0) {
+                selector.innerHTML = '<option value="">No events scheduled yet</option>';
+            }
+        }
+
+        function goToMonth(year, month) {
+            currentYear = year;
+            currentMonth = month;
+            renderCalendar(currentYear, currentMonth);
         }
 
         function displayEventsGrid() {
@@ -1105,6 +1189,17 @@
             }
             renderCalendar(currentYear, currentMonth);
         }
+
+        // Month selector change handler
+        document.getElementById('monthSelector').addEventListener('change', function(e) {
+            const value = e.target.value;
+            if (value) {
+                const [year, month] = value.split('-');
+                goToMonth(parseInt(year), parseInt(month));
+                // Reset dropdown
+                e.target.value = '';
+            }
+        });
 
         document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
         document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
