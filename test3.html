@@ -1,54 +1,1216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .cart-notification{
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--success);
-    color: white;
-    padding: 0.9rem 1.6rem;
-    border-radius: 50px;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(120px);
-    transition: transform 0.35s ease;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-weight: 500;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Events - Divine Grace Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #f8b739;
+            --accent: #2c6e49;
+            --light: #f5f5f5;
+            --dark: #333;
+            --white: #ffffff;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --footer-bg: #1a1a1a;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
 
-.cart-notification.show{
-    transform: translateY(0);
-}
-  </style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--light);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 32px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .back-home {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-home:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(26, 75, 140, 0.9), rgba(26, 75, 140, 0.8)), url('https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-color);
+            font-size: 16px;
+        }
+
+        .events-filter {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 22px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card.featured {
+            border: 2px solid var(--secondary);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .event-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .event-date-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .event-date-badge .day {
+            font-size: 22px;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+
+        .event-date-badge .month {
+            font-size: 12px;
+            display: block;
+        }
+
+        .event-content {
+            padding: 20px;
+        }
+
+        .event-category {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .event-title {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: var(--text-color);
+        }
+
+        .event-meta-item i {
+            color: var(--primary);
+            width: 14px;
+        }
+
+        .event-description {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .calendar-section {
+            background: var(--light);
+            padding: 60px 0;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .calendar-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .current-month {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Month Selector Dropdown */
+        .month-selector {
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .month-selector:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .month-selector:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(248, 183, 57, 0.3);
+        }
+
+        /* Month with events badge indicator in dropdown */
+        .month-with-events {
+            position: relative;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .calendar-day-header {
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .calendar-day {
+            background: var(--card-bg);
+            padding: 12px;
+            min-height: 110px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .calendar-day:hover {
+            background: rgba(26, 75, 140, 0.05);
+        }
+
+        .calendar-day.empty {
+            background: var(--light);
+            opacity: 0.5;
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .event-badge-calendar {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #1e5631);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-top: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .event-badge-calendar:hover {
+            background: linear-gradient(135deg, var(--secondary), #e6a017);
+            transform: scale(1.02);
+            color: var(--dark);
+        }
+
+        .event-badge-calendar.multiple {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+        }
+
+        .calendar-day {
+            position: relative;
+        }
+
+        .event-tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+
+        .event-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark) transparent transparent transparent;
+        }
+
+        .event-badge-calendar:hover + .event-tooltip,
+        .calendar-day:hover .event-tooltip {
+            visibility: visible;
+        }
+
+        .upcoming-events {
+            margin-top: 60px;
+        }
+
+        .events-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+            background: rgba(26, 75, 140, 0.03);
+            padding-left: 10px;
+        }
+
+        .timeline-date {
+            width: 80px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .timeline-day {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .timeline-month {
+            font-size: 12px;
+            color: var(--text-color);
+            text-transform: uppercase;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .timeline-content p {
+            color: var(--text-color);
+            font-size: 13px;
+        }
+
+        .timeline-category {
+            display: inline-block;
+            background: var(--light);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            margin-top: 5px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary), #0d3a6b);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+        }
+
+        .newsletter-input:focus {
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary);
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 50px 0 25px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 3px;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 13px;
+        }
+
+        .contact-info i {
+            margin-right: 8px;
+            color: var(--secondary);
+            width: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 28px; }
+            .calendar-day { min-height: 90px; padding: 8px; }
+            .day-number { font-size: 14px; }
+            .event-badge-calendar { font-size: 9px; padding: 2px 6px; }
+            .timeline-item { flex-direction: column; }
+            .timeline-date { margin-bottom: 8px; text-align: left; width: auto; display: flex; gap: 8px; align-items: baseline; }
+            .timeline-day { font-size: 22px; }
+            .btn-outline, .btn-secondary { padding: 8px 16px; font-size: 12px; }
+            .calendar-controls { flex-direction: column; align-items: stretch; }
+            .month-selector { width: 100%; }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Divine Grace Academy</h1>
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" class="back-home">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
+    <section class="hero">
+        <div class="container">
+            <h2>Campus Events & Activities</h2>
+            <p>Join our vibrant community for educational, cultural, and social events throughout the year</p>
+        </div>
+    </section>
 
+    <main class="main-content">
+        <div class="container">
+            <div class="events-filter">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="academic">Academic</button>
+                <button class="filter-btn" data-filter="sports">Sports</button>
+                <button class="filter-btn" data-filter="arts">Arts & Culture</button>
+                <button class="filter-btn" data-filter="community">Community</button>
+                <button class="filter-btn" data-filter="featured">Featured</button>
+            </div>
 
+            <div class="events-grid" id="eventsGrid">
+                <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>
+            </div>
 
+            <section class="calendar-section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>📅 Events Calendar</h2>
+                        <p>Hover over any event badge to see details • Click to view all events for that day • Use the dropdown to jump to months with events</p>
+                    </div>
 
-<div class="cart-notification" id="cartNotification" role="status" aria-live="polite">
-        <i class="fas fa-check-circle" aria-hidden="true"></i>
-        <span>Product added to cart</span>
-    </div>
+                    <div class="calendar-header">
+                        <h3 class="current-month" id="currentMonth">March 2024</h3>
+                        <div class="calendar-controls">
+                            <select id="monthSelector" class="month-selector">
+                                <option value="">-- Select Month --</option>
+                            </select>
+                            <div class="calendar-nav">
+                                <button class="btn-outline" id="prevMonthBtn">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <button class="btn-outline" id="nextMonthBtn">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar will be generated dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="upcoming-events">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>⭐ Upcoming Events</h2>
+                        <p>Never miss an important campus event</p>
+                    </div>
+                    <div class="events-timeline" id="timelineContainer">
+                        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading timeline...</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our events newsletter and never miss an important campus activity</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn-secondary">
+                        <i class="fas fa-paper-plane"></i> Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Divine Grace Academy</h3>
+                    <p>Providing exceptional education in a nurturing environment since 1995.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="events.html">Campus Events</a></li>
+                        <li><a href="tour.html">Schedule a Tour</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Learning City</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> events@divinegrace.edu</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Divine Grace Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
+            authDomain: "divine-grace-academy.firebaseapp.com",
+            projectId: "divine-grace-academy",
+            storageBucket: "divine-grace-academy.firebasestorage.app",
+            messagingSenderId: "84424080855",
+            appId: "1:84424080855:web:0d2d58926ada950a101f92"
+        };
 
-  const note = document.getElementById('cartNotification');
-if (note) {
-    note.classList.add('show');
-    setTimeout(() => note.classList.remove('show'), 2200);
-    }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
+        let allEvents = [];
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        let monthsWithEvents = new Set(); // Track which months have events
 
-    
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        async function loadAllEvents() {
+            try {
+                const querySnapshot = await db.collection('events').get();
+                allEvents = [];
+                monthsWithEvents.clear();
+                
+                querySnapshot.forEach(doc => {
+                    const eventData = doc.data();
+                    if (eventData.date) {
+                        allEvents.push({ id: doc.id, ...eventData });
+                        // Track months with events
+                        const eventDate = new Date(eventData.date);
+                        if (!isNaN(eventDate.getTime())) {
+                            monthsWithEvents.add(`${eventDate.getFullYear()}-${eventDate.getMonth()}`);
+                        }
+                    }
+                });
+                
+                displayEventsGrid();
+                populateMonthSelector();
+                renderCalendar(currentYear, currentMonth);
+                renderTimeline();
+                
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('eventsGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: red;">Error loading events</div>';
+            }
+        }
+
+        function populateMonthSelector() {
+            const selector = document.getElementById('monthSelector');
+            selector.innerHTML = '<option value="">📅 Jump to month with events</option>';
+            
+            // Get unique months with events and sort them
+            const sortedMonths = Array.from(monthsWithEvents).sort();
+            
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const monthNum = parseInt(month);
+                const monthName = monthNames[monthNum];
+                const eventCount = allEvents.filter(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate.getFullYear() === parseInt(year) && eventDate.getMonth() === monthNum;
+                }).length;
+                
+                const option = document.createElement('option');
+                option.value = monthKey;
+                option.textContent = `${monthName} ${year} (${eventCount} event${eventCount !== 1 ? 's' : ''}) 🎉`;
+                selector.appendChild(option);
+            });
+            
+            if (sortedMonths.length === 0) {
+                selector.innerHTML = '<option value="">No events scheduled yet</option>';
+            }
+        }
+
+        function goToMonth(year, month) {
+            currentYear = year;
+            currentMonth = month;
+            renderCalendar(currentYear, currentMonth);
+        }
+
+        function displayEventsGrid() {
+            const eventsGrid = document.getElementById('eventsGrid');
+            
+            if (allEvents.length === 0) {
+                eventsGrid.innerHTML = '<div style="text-align: center; padding: 40px;">No events found.</div>';
+                return;
+            }
+
+            eventsGrid.innerHTML = '';
+            
+            allEvents.forEach(event => {
+                const eventDate = new Date(event.date);
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+                
+                const card = `
+                    <div class="event-card ${event.featured ? 'featured' : ''}" data-category="${event.category || 'general'}">
+                        ${event.featured ? '<div class="event-badge">⭐ Featured</div>' : ''}
+                        <div class="event-image" style="background-image: url('${event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}');">
+                            <div class="event-date-badge">
+                                <span class="day">${event.day || day}</span>
+                                <span class="month">${event.month || month}</span>
+                            </div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-category">${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
+                            <h3 class="event-title">${event.title || 'Untitled'}</h3>
+                            <div class="event-meta">
+                                <div class="event-meta-item"><i class="fas fa-clock"></i> ${event.time || 'Time TBD'}</div>
+                                <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</div>
+                            </div>
+                            <p class="event-description">${event.description || 'No description available.'}</p>
+                        </div>
+                    </div>
+                `;
+                eventsGrid.innerHTML += card;
+            });
+            
+            attachFilterListeners();
+        }
+
+        function attachFilterListeners() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const eventCards = document.querySelectorAll('.event-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    eventCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const cardCategory = card.getAttribute('data-category');
+                            if (cardCategory && cardCategory.includes(filterValue)) {
+                                card.style.display = 'block';
+                            } else if (filterValue === 'featured' && card.classList.contains('featured')) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        }
+
+        function getEventsForDate(year, month, day) {
+            return allEvents.filter(event => {
+                if (!event.date) return false;
+                const eventDate = new Date(event.date);
+                return eventDate.getFullYear() === year && 
+                       eventDate.getMonth() === month && 
+                       eventDate.getDate() === day;
+            });
+        }
+
+        function showDayEvents(year, month, day) {
+            const events = getEventsForDate(year, month, day);
+            if (events.length === 0) return;
+            
+            let message = `📅 ${events.length} Event(s) for ${monthNames[month]} ${day}, ${year}:\n\n`;
+            events.forEach(event => {
+                message += `📌 ${event.title}\n   🕒 ${event.time || 'Time TBD'}\n   📍 ${event.location || 'Location TBD'}\n   🏷️ ${(event.category || 'General').toUpperCase()}\n\n`;
+            });
+            alert(message);
+        }
+
+        function renderCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const startingDayOfWeek = firstDay.getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+            
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayNames.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                calendarGrid.appendChild(header);
+            });
+            
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                dayCell.appendChild(dayNumber);
+                
+                const eventsOnDay = getEventsForDate(year, month, day);
+                
+                if (eventsOnDay.length > 0) {
+                    const eventsContainer = document.createElement('div');
+                    eventsContainer.style.marginTop = '8px';
+                    
+                    const displayEvents = eventsOnDay.slice(0, 2);
+                    displayEvents.forEach(event => {
+                        const eventBadge = document.createElement('div');
+                        eventBadge.className = 'event-badge-calendar';
+                        const shortTitle = event.title.length > 20 ? event.title.substring(0, 18) + '...' : event.title;
+                        eventBadge.innerHTML = `<i class="fas fa-calendar-alt" style="font-size: 8px; margin-right: 4px;"></i> ${shortTitle}`;
+                        
+                        const tooltip = document.createElement('div');
+                        tooltip.className = 'event-tooltip';
+                        tooltip.innerHTML = `<strong>${event.title}</strong><br>🕒 ${event.time || 'Time TBD'}<br>📍 ${event.location || 'Location TBD'}`;
+                        eventBadge.appendChild(tooltip);
+                        
+                        eventBadge.onclick = (e) => {
+                            e.stopPropagation();
+                            alert(`📅 ${event.title}\n\n🕒 ${event.time || 'Time TBD'}\n📍 ${event.location || 'Location TBD'}\n\n📝 ${event.description || 'No description available.'}`);
+                        };
+                        eventsContainer.appendChild(eventBadge);
+                    });
+                    
+                    if (eventsOnDay.length > 2) {
+                        const moreBadge = document.createElement('div');
+                        moreBadge.className = 'event-badge-calendar multiple';
+                        moreBadge.innerHTML = `<i class="fas fa-plus-circle"></i> +${eventsOnDay.length - 2} more`;
+                        moreBadge.onclick = (e) => {
+                            e.stopPropagation();
+                            showDayEvents(year, month, day);
+                        };
+                        eventsContainer.appendChild(moreBadge);
+                    }
+                    
+                    dayCell.appendChild(eventsContainer);
+                    dayCell.style.cursor = 'pointer';
+                    dayCell.onclick = () => showDayEvents(year, month, day);
+                }
+                
+                calendarGrid.appendChild(dayCell);
+            }
+            
+            const totalCells = startingDayOfWeek + daysInMonth;
+            const remainingCells = 42 - totalCells;
+            for (let i = 0; i < remainingCells; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+        }
+
+        function renderTimeline() {
+            const timelineContainer = document.getElementById('timelineContainer');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const upcomingEvents = allEvents
+                .filter(event => {
+                    if (!event.date) return false;
+                    const eventDate = new Date(event.date);
+                    return eventDate >= today;
+                })
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .slice(0, 10);
+            
+            if (upcomingEvents.length === 0) {
+                timelineContainer.innerHTML = '<div style="text-align: center; padding: 40px;">✨ No upcoming events scheduled. Check back soon!</div>';
+                return;
+            }
+            
+            timelineContainer.innerHTML = '';
+            
+            upcomingEvents.forEach(event => {
+                const eventDate = new Date(event.date);
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+                
+                timelineContainer.innerHTML += `
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <div class="timeline-day">${event.day || day}</div>
+                            <div class="timeline-month">${event.month || month}</div>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>${event.title || 'Untitled Event'}</h4>
+                            <p><i class="fas fa-clock"></i> ${event.time || 'Time TBD'} | <i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</p>
+                            <span class="timeline-category"><i class="fas fa-tag"></i> ${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+        
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+
+        // Month selector change handler
+        document.getElementById('monthSelector').addEventListener('change', function(e) {
+            const value = e.target.value;
+            if (value) {
+                const [year, month] = value.split('-');
+                goToMonth(parseInt(year), parseInt(month));
+                // Reset dropdown
+                e.target.value = '';
+            }
+        });
+
+        document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
+        document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
+        
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(`📧 Thank you for subscribing! You'll receive updates about campus events.`);
+            this.reset();
+        });
+
+        document.addEventListener('DOMContentLoaded', loadAllEvents);
     </script>
 </body>
 </html>

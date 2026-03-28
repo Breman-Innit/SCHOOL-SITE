@@ -1,105 +1,141 @@
-
-
 // ===========================================
-// FIREBASE - LOAD EVENTS FROM DATABASE
+// FIREBASE & EMAILJS CONFIGURATION
 // ===========================================
 
-// Reference to the events grid
-const eventsGrid = document.getElementById('eventsGrid');
+// Initialize EmailJS
+emailjs.init("CwH05MhdjatUiDqNy");
 
-// Function to load events from Firebase
-async function loadEvents() {
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
+    authDomain: "divine-grace-academy.firebaseapp.com",
+    projectId: "divine-grace-academy",
+    storageBucket: "divine-grace-academy.firebasestorage.app",
+    messagingSenderId: "84424080855",
+    appId: "1:84424080855:web:0d2d58926ada950a101f92"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Global variables
+let allEvents = [];
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+let monthsWithEvents = new Set();
+
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// ===========================================
+// LOAD ALL EVENTS FROM FIREBASE
+// ===========================================
+async function loadAllEvents() {
     try {
-        // Show loading state
-        eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>';
+        const querySnapshot = await db.collection('events').get();
+        allEvents = [];
+        monthsWithEvents.clear();
         
-        // Get events from Firestore
-        const querySnapshot = await window.db.collection('events').get();
-        
-        // Clear loading message
-        eventsGrid.innerHTML = '';
-        
-        if (querySnapshot.empty) {
-            eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;">No events found.</div>';
-            return;
-        }
-        
-        // Loop through each event document
         querySnapshot.forEach(doc => {
-            const event = doc.data();
-            const eventId = doc.id;
-            
-            // Create event card HTML
-            const eventCard = createEventCard(event, eventId);
-            eventsGrid.innerHTML += eventCard;
+            const eventData = doc.data();
+            if (eventData.date) {
+                allEvents.push({ id: doc.id, ...eventData });
+                const eventDate = new Date(eventData.date);
+                if (!isNaN(eventDate.getTime())) {
+                    monthsWithEvents.add(`${eventDate.getFullYear()}-${eventDate.getMonth()}`);
+                }
+            }
         });
         
-        // Re-attach event listeners for filter buttons and calendar buttons
-        attachEventListeners();
+        displayEventsGrid();
+        populateMonthSelector();
+        renderCalendar(currentYear, currentMonth);
+        renderTimeline();
         
     } catch (error) {
-        console.error("Error loading events:", error);
-        eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> Error loading events. Please try again.</div>';
+        console.error("Error:", error);
+        document.getElementById('eventsGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: red;">Error loading events</div>';
     }
 }
 
-// Function to create event card HTML
-function createEventCard(event, eventId) {
-    // Set default values if fields are missing
-    const title = event.title || 'Untitled Event';
-    const category = event.category || 'general';
-    const description = event.description || 'No description available.';
-    const date = event.date || 'TBD';
-    const time = event.time || 'Time TBD';
-    const location = event.location || 'Location TBD';
-    const image = event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
-    const featured = event.featured || false;
-    const day = event.day || new Date(date).getDate() || '15';
-    const month = event.month || new Date(date).toLocaleString('default', { month: 'short' }).toUpperCase() || 'MAR';
+// ===========================================
+// POPULATE MONTH SELECTOR DROPDOWN
+// ===========================================
+function populateMonthSelector() {
+    const selector = document.getElementById('monthSelector');
+    selector.innerHTML = '<option value="">📅 Jump to month with events</option>';
     
-    // Determine card classes
-    const cardClasses = `event-card ${featured ? 'featured' : ''} fade-in`;
-    const categoryAttr = `academic sports arts community`.includes(category) ? category : 'general';
+    const sortedMonths = Array.from(monthsWithEvents).sort();
     
-    return `
-        <div class="${cardClasses}" data-category="${categoryAttr}" data-id="${eventId}">
-            ${featured ? '<div class="event-badge">Featured</div>' : ''}
-            <div class="event-image" style="background-image: url('${image}');">
-                <div class="event-date">
-                    <span class="day">${day}</span>
-                    <span class="month">${month}</span>
-                </div>
-            </div>
-            <div class="event-content">
-                <span class="event-category">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
-                <h3 class="event-title">${title}</h3>
-                <div class="event-meta">
-                    <div class="event-meta-item">
-                        <i class="fas fa-clock"></i>
-                        <span>${time}</span>
-                    </div>
-                    <div class="event-meta-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>${location}</span>
-                    </div>
-                </div>
-                <p class="event-description">${description}</p>
-                <div class="event-actions">
-                    <button class="btn btn-primary add-to-calendar">
-                        <i class="fas fa-calendar-plus"></i> Add to Calendar
-                    </button>
-                    <button class="btn btn-outline learn-more">
-                        <i class="fas fa-info-circle"></i> Learn More
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
+    sortedMonths.forEach(monthKey => {
+        const [year, month] = monthKey.split('-');
+        const monthNum = parseInt(month);
+        const monthName = monthNames[monthNum];
+        const eventCount = allEvents.filter(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.getFullYear() === parseInt(year) && eventDate.getMonth() === monthNum;
+        }).length;
+        
+        const option = document.createElement('option');
+        option.value = monthKey;
+        option.textContent = `${monthName} ${year} (${eventCount} event${eventCount !== 1 ? 's' : ''}) 🎉`;
+        selector.appendChild(option);
+    });
+    
+    if (sortedMonths.length === 0) {
+        selector.innerHTML = '<option value="">No events scheduled yet</option>';
+    }
 }
 
-// Function to attach event listeners
-function attachEventListeners() {
-    // Filter buttons functionality
+// ===========================================
+// DISPLAY EVENTS GRID
+// ===========================================
+function displayEventsGrid() {
+    const eventsGrid = document.getElementById('eventsGrid');
+    
+    if (allEvents.length === 0) {
+        eventsGrid.innerHTML = '<div style="text-align: center; padding: 40px;">No events found.</div>';
+        return;
+    }
+
+    eventsGrid.innerHTML = '';
+    
+    allEvents.forEach(event => {
+        const eventDate = new Date(event.date);
+        const day = eventDate.getDate();
+        const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+        
+        const card = `
+            <div class="event-card ${event.featured ? 'featured' : ''}" data-category="${event.category || 'general'}">
+                ${event.featured ? '<div class="event-badge">⭐ Featured</div>' : ''}
+                <div class="event-image" style="background-image: url('${event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}');">
+                    <div class="event-date">
+                        <span class="day">${event.day || day}</span>
+                        <span class="month">${event.month || month}</span>
+                    </div>
+                </div>
+                <div class="event-content">
+                    <span class="event-category">${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
+                    <h3 class="event-title">${event.title || 'Untitled'}</h3>
+                    <div class="event-meta">
+                        <div class="event-meta-item"><i class="fas fa-clock"></i> ${event.time || 'Time TBD'}</div>
+                        <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</div>
+                    </div>
+                    <p class="event-description">${event.description || 'No description available.'}</p>
+                </div>
+            </div>
+        `;
+        eventsGrid.innerHTML += card;
+    });
+    
+    attachFilterListeners();
+}
+
+// ===========================================
+// FILTER BUTTONS
+// ===========================================
+function attachFilterListeners() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const eventCards = document.querySelectorAll('.event-card');
 
@@ -117,6 +153,8 @@ function attachEventListeners() {
                     const cardCategory = card.getAttribute('data-category');
                     if (cardCategory && cardCategory.includes(filterValue)) {
                         card.style.display = 'block';
+                    } else if (filterValue === 'featured' && card.classList.contains('featured')) {
+                        card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
                     }
@@ -124,44 +162,358 @@ function attachEventListeners() {
             });
         });
     });
+}
 
-    // Add to Calendar functionality
-    document.querySelectorAll('.add-to-calendar').forEach(button => {
-        button.addEventListener('click', function() {
-            const eventCard = this.closest('.event-card');
-            const eventTitle = eventCard.querySelector('.event-title').textContent;
-            alert(`"${eventTitle}" has been added to your calendar! (Demo only)`);
-        });
+// ===========================================
+// CALENDAR FUNCTIONS
+// ===========================================
+function getEventsForDate(year, month, day) {
+    return allEvents.filter(event => {
+        if (!event.date) return false;
+        const eventDate = new Date(event.date);
+        return eventDate.getFullYear() === year && 
+               eventDate.getMonth() === month && 
+               eventDate.getDate() === day;
     });
 }
 
-// Load events when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadEvents();
+function showDayEvents(year, month, day) {
+    const events = getEventsForDate(year, month, day);
+    if (events.length === 0) return;
     
-    // Also keep your scroll animations
-    const fadeElements = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    fadeElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        observer.observe(element);
+    let message = `📅 ${events.length} Event(s) for ${monthNames[month]} ${day}, ${year}:\n\n`;
+    events.forEach(event => {
+        message += `📌 ${event.title}\n   🕒 ${event.time || 'Time TBD'}\n   📍 ${event.location || 'Location TBD'}\n   🏷️ ${(event.category || 'General').toUpperCase()}\n\n`;
     });
+    alert(message);
+}
+
+function renderCalendar(year, month) {
+    const firstDay = new Date(year, month, 1);
+    const startingDayOfWeek = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+    
+    const calendarGrid = document.getElementById('calendarGrid');
+    calendarGrid.innerHTML = '';
+    
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayNames.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        calendarGrid.appendChild(header);
+    });
+    
+    for (let i = 0; i < startingDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day empty';
+        calendarGrid.appendChild(emptyDay);
+    }
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'calendar-day';
+        
+        const dayNumber = document.createElement('div');
+        dayNumber.className = 'day-number';
+        dayNumber.textContent = day;
+        dayCell.appendChild(dayNumber);
+        
+        const eventsOnDay = getEventsForDate(year, month, day);
+        
+        if (eventsOnDay.length > 0) {
+            const eventsContainer = document.createElement('div');
+            eventsContainer.style.marginTop = '8px';
+            
+            const displayEvents = eventsOnDay.slice(0, 2);
+            displayEvents.forEach(event => {
+                const eventBadge = document.createElement('div');
+                eventBadge.className = 'event-badge-calendar';
+                const shortTitle = event.title.length > 20 ? event.title.substring(0, 18) + '...' : event.title;
+                eventBadge.innerHTML = `<i class="fas fa-calendar-alt" style="font-size: 8px; margin-right: 4px;"></i> ${shortTitle}`;
+                
+                const tooltip = document.createElement('div');
+                tooltip.className = 'event-tooltip';
+                tooltip.innerHTML = `<strong>${event.title}</strong><br>🕒 ${event.time || 'Time TBD'}<br>📍 ${event.location || 'Location TBD'}`;
+                eventBadge.appendChild(tooltip);
+                
+                eventBadge.onclick = (e) => {
+                    e.stopPropagation();
+                    alert(`📅 ${event.title}\n\n🕒 ${event.time || 'Time TBD'}\n📍 ${event.location || 'Location TBD'}\n\n📝 ${event.description || 'No description available.'}`);
+                };
+                eventsContainer.appendChild(eventBadge);
+            });
+            
+            if (eventsOnDay.length > 2) {
+                const moreBadge = document.createElement('div');
+                moreBadge.className = 'event-badge-calendar multiple';
+                moreBadge.innerHTML = `<i class="fas fa-plus-circle"></i> +${eventsOnDay.length - 2} more`;
+                moreBadge.onclick = (e) => {
+                    e.stopPropagation();
+                    showDayEvents(year, month, day);
+                };
+                eventsContainer.appendChild(moreBadge);
+            }
+            
+            dayCell.appendChild(eventsContainer);
+            dayCell.style.cursor = 'pointer';
+            dayCell.onclick = () => showDayEvents(year, month, day);
+        }
+        
+        calendarGrid.appendChild(dayCell);
+    }
+    
+    const totalCells = startingDayOfWeek + daysInMonth;
+    const remainingCells = 42 - totalCells;
+    for (let i = 0; i < remainingCells; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day empty';
+        calendarGrid.appendChild(emptyDay);
+    }
+}
+
+// ===========================================
+// TIMELINE - SHOW ALL EVENTS
+// ===========================================
+function renderTimeline() {
+    const timelineContainer = document.getElementById('timelineContainer');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const allEventsSorted = allEvents
+        .filter(event => event.date)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    if (allEventsSorted.length === 0) {
+        timelineContainer.innerHTML = '<div style="text-align: center; padding: 40px;">✨ No events scheduled. Check back soon!</div>';
+        return;
+    }
+    
+    timelineContainer.innerHTML = '';
+    
+    allEventsSorted.forEach(event => {
+        const eventDate = new Date(event.date);
+        const day = eventDate.getDate();
+        const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+        const isPast = eventDate < today;
+        
+        timelineContainer.innerHTML += `
+            <div class="timeline-item" style="${isPast ? 'opacity: 0.7;' : ''}">
+                <div class="timeline-date">
+                    <div class="timeline-day">${event.day || day}</div>
+                    <div class="timeline-month">${event.month || month}</div>
+                </div>
+                <div class="timeline-content">
+                    <h4>${event.title || 'Untitled Event'} ${isPast ? '<span style="font-size: 10px; color: #888;"> (Past Event)</span>' : '<span style="font-size: 10px; color: #2c6e49;"> (Upcoming)</span>'}</h4>
+                    <p><i class="fas fa-clock"></i> ${event.time || 'Time TBD'} | <i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</p>
+                    <span class="timeline-category"><i class="fas fa-tag"></i> ${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// ===========================================
+// MONTH NAVIGATION
+// ===========================================
+function prevMonth() {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    renderCalendar(currentYear, currentMonth);
+}
+
+function nextMonth() {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    renderCalendar(currentYear, currentMonth);
+}
+
+// ===========================================
+// MONTH SELECTOR
+// ===========================================
+document.getElementById('monthSelector').addEventListener('change', function(e) {
+    const value = e.target.value;
+    if (value) {
+        const [year, month] = value.split('-');
+        currentYear = parseInt(year);
+        currentMonth = parseInt(month);
+        renderCalendar(currentYear, currentMonth);
+        e.target.value = '';
+    }
 });
 
-// Newsletter form submission
-document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = this.querySelector('.newsletter-input').value;
-    alert(`Thank you for subscribing with ${email}! You'll receive our next events newsletter.`);
-    this.reset();
-});
+document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
+document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
+
+// ===========================================
+// NEWSLETTER FORM WITH EMAIL SENDING
+// ===========================================
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('.newsletter-input');
+        const email = emailInput.value;
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        if (!email || !email.includes('@')) {
+            alert('📧 Please enter a valid email address.');
+            return;
+        }
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+        submitBtn.disabled = true;
+        
+        try {
+            // Check if email already exists
+            const existing = await db.collection('newsletterSubscribers')
+                .where('email', '==', email)
+                .get();
+            
+            if (!existing.empty) {
+                alert('✅ You are already subscribed!');
+                emailInput.value = '';
+                return;
+            }
+            
+            // Save to Firebase
+            await db.collection('newsletterSubscribers').add({
+                email: email,
+                subscribedAt: new Date().toISOString(),
+                status: 'active'
+            });
+            
+            // Fetch ALL events from Firebase
+            const eventsSnapshot = await db.collection('events').get();
+            const allEventsList = [];
+            
+            eventsSnapshot.forEach(doc => {
+                const event = doc.data();
+                if (event.date) {
+                    allEventsList.push(event);
+                }
+            });
+            
+            // Sort by date and take first 3
+            allEventsList.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const topEvents = allEventsList.slice(0, 3);
+            
+            // Build events HTML
+            let eventsHTML = '';
+            if (topEvents.length > 0) {
+                topEvents.forEach(event => {
+                    const eventDate = new Date(event.date);
+                    const formattedDate = eventDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    eventsHTML += `
+                        <div style="background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #f8b739;">
+                            <h4 style="color: #1a4b8c; margin: 0 0 8px;">${event.title || 'Upcoming Event'}</h4>
+                            <p style="margin: 5px 0;">📅 ${formattedDate} | ${event.time || 'Time TBD'}</p>
+                            <p style="margin: 5px 0;">📍 ${event.location || 'Location TBD'}</p>
+                        </div>
+                    `;
+                });
+            } else {
+                eventsHTML = '<p style="color: #666;">✨ No events scheduled yet. Check back soon!</p>';
+            }
+            
+            // Build full email HTML
+            const emailHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: 'Poppins', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+                        .container { max-width: 600px; margin: 0 auto; background: #fff; }
+                        .header { background: linear-gradient(135deg, #1a4b8c, #0d3a6b); color: white; padding: 30px 20px; text-align: center; }
+                        .header h1 { margin: 0; font-size: 28px; }
+                        .header p { margin: 5px 0 0; opacity: 0.9; }
+                        .content { padding: 30px 25px; }
+                        .welcome { background: #f8b73920; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
+                        .button { background: #f8b739; color: #333; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
+                        .footer { background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; }
+                        .footer a { color: #1a4b8c; text-decoration: none; }
+                        .divider { height: 2px; background: linear-gradient(to right, #f8b739, #1a4b8c); margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h1>🎓 Divine Grace Academy</h1>
+                            <p>Excellence in Education | With God All Things Are Possible</p>
+                        </div>
+                        
+                        <div class="content">
+                            <div class="welcome">
+                                <h3>👋 Hello ${email.split('@')[0]}!</h3>
+                                <p>Thank you for subscribing to the Divine Grace Academy newsletter! We're excited to keep you updated on all the amazing things happening at our school.</p>
+                            </div>
+                            
+                            <h3>📅 Featured Events</h3>
+                            ${eventsHTML}
+                            
+                            <div class="divider"></div>
+                            
+                            <p style="text-align: center;">
+                                <a href="https://breman-innit.github.io/SCHOOL-SITE/events.html" class="button">📖 View All Events</a>
+                            </p>
+                            
+                            <p><strong>What to expect:</strong></p>
+                            <ul>
+                                <li>⭐ Monthly event updates</li>
+                                <li>🏆 Student achievement highlights</li>
+                                <li>📢 Important school announcements</li>
+                                <li>🎉 Community news and celebrations</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer">
+                            <p>Divine Grace Academy<br>
+                            3rd October Junction, Ashalaja</p>
+                            <p>
+                                <a href="https://breman-innit.github.io/SCHOOL-SITE/unsubscribe.html?email=${email}">Unsubscribe</a> | 
+                                <a href="https://breman-innit.github.io/SCHOOL-SITE">Visit our website</a>
+                            </p>
+                            <p>© 2025 Divine Grace Academy. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Send welcome email
+            const templateParams = {
+                email: email,
+                to_name: email.split('@')[0],
+                from_name: 'Divine Grace Academy',
+                reply_to: 'divinegraceacademycommunity@gmail.com',
+                html_message: emailHTML
+            };
+            
+            await emailjs.send('service_vybn3ea', 'template_3nx9uvs', templateParams);
+            
+            alert(`🎉 Welcome to Divine Grace Academy!\n\nWe've sent a welcome email to ${email} with upcoming events. Check your inbox!`);
+            emailInput.value = '';
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Something went wrong. Please try again later.');
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+}
+
+// ===========================================
+// INITIALIZE
+// ===========================================
+document.addEventListener('DOMContentLoaded', loadAllEvents);
