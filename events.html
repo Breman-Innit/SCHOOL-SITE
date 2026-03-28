@@ -1180,7 +1180,7 @@
         document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
         document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
         
-  // Newsletter form with email sending
+// Newsletter form with email sending
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
     newsletterForm.addEventListener('submit', async function(e) {
@@ -1199,6 +1199,17 @@ if (newsletterForm) {
         submitBtn.disabled = true;
         
         try {
+            // Check if email already exists
+            const existing = await db.collection('newsletterSubscribers')
+                .where('email', '==', email)
+                .get();
+            
+            if (!existing.empty) {
+                alert('✅ You are already subscribed!');
+                emailInput.value = '';
+                return;
+            }
+            
             // Save to Firebase
             await db.collection('newsletterSubscribers').add({
                 email: email,
@@ -1206,17 +1217,121 @@ if (newsletterForm) {
                 status: 'active'
             });
             
-            // Send welcome email using EmailJS
+            // ✅ NEW: Fetch upcoming events from Firebase
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const eventsSnapshot = await db.collection('events').get();
+            const upcomingEvents = [];
+            
+            eventsSnapshot.forEach(doc => {
+                const event = doc.data();
+                if (event.date) {
+                    const eventDate = new Date(event.date);
+                    if (eventDate >= today) {
+                        upcomingEvents.push(event);
+                    }
+                }
+            });
+            
+            // Sort by date and take first 3
+            upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const topEvents = upcomingEvents.slice(0, 3);
+            
+            // Build events HTML
+            let eventsHTML = '';
+            if (topEvents.length > 0) {
+                topEvents.forEach(event => {
+                    const eventDate = new Date(event.date);
+                    const formattedDate = eventDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    eventsHTML += `
+                        <div style="background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #f8b739;">
+                            <h4 style="color: #1a4b8c; margin: 0 0 8px;">${event.title || 'Upcoming Event'}</h4>
+                            <p style="margin: 5px 0;">📅 ${formattedDate} | ${event.time || 'Time TBD'}</p>
+                            <p style="margin: 5px 0;">📍 ${event.location || 'Location TBD'}</p>
+                        </div>
+                    `;
+                });
+            } else {
+                eventsHTML = '<p style="color: #666;">✨ No upcoming events scheduled yet. Check back soon!</p>';
+            }
+            
+            // Build full email HTML
+            const emailHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: 'Poppins', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+                        .container { max-width: 600px; margin: 0 auto; background: #fff; }
+                        .header { background: linear-gradient(135deg, #1a4b8c, #0d3a6b); color: white; padding: 30px 20px; text-align: center; }
+                        .header h1 { margin: 0; font-size: 28px; }
+                        .header p { margin: 5px 0 0; opacity: 0.9; }
+                        .content { padding: 30px 25px; }
+                        .welcome { background: #f8b73920; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
+                        .button { background: #f8b739; color: #333; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
+                        .footer { background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; }
+                        .footer a { color: #1a4b8c; text-decoration: none; }
+                        .divider { height: 2px; background: linear-gradient(to right, #f8b739, #1a4b8c); margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h1>🎓 Divine Grace Academy</h1>
+                            <p>Excellence in Education | With God All Things Are Possible</p>
+                        </div>
+                        
+                        <div class="content">
+                            <div class="welcome">
+                                <h3>👋 Hello ${email.split('@')[0]}!</h3>
+                                <p>Thank you for subscribing to the Divine Grace Academy newsletter! We're excited to keep you updated on all the amazing things happening at our school.</p>
+                            </div>
+                            
+                            <h3>📅 Upcoming Events</h3>
+                            ${eventsHTML}
+                            
+                            <div class="divider"></div>
+                            
+                            <p style="text-align: center;">
+                                <a href="https://breman-innit.github.io/SCHOOL-SITE/events.html" class="button">📖 View All Events</a>
+                            </p>
+                            
+                            <p><strong>What to expect:</strong></p>
+                            <ul>
+                                <li>⭐ Monthly event updates</li>
+                                <li>🏆 Student achievement highlights</li>
+                                <li>📢 Important school announcements</li>
+                                <li>🎉 Community news and celebrations</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer">
+                            <p>Divine Grace Academy<br>
+                            3rd October Junction, Ashalaja</p>
+                            <p>
+                                <a href="https://breman-innit.github.io/SCHOOL-SITE/unsubscribe.html?email=${email}">Unsubscribe</a> | 
+                                <a href="https://breman-innit.github.io/SCHOOL-SITE">Visit our website</a>
+                            </p>
+                            <p>© 2025 Divine Grace Academy. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Send welcome email with dynamic events
             const templateParams = {
-                email: email,  // ← FIXED: matches {{email}} in template
+                email: email,
                 to_name: email.split('@')[0],
                 from_name: 'Divine Grace Academy',
-                reply_to: 'divinegraceacademycommunity@gmail.com'
+                reply_to: 'divinegraceacademycommunity@gmail.com',
+                html_message: emailHTML  // Send the full HTML email
             };
             
             await emailjs.send('service_vybn3ea', 'template_3nx9uvs', templateParams);
             
-            alert(`🎉 Welcome to Divine Grace Academy!\n\nWe've sent a welcome email to ${email}. Check your inbox!`);
+            alert(`🎉 Welcome to Divine Grace Academy!\n\nWe've sent a welcome email to ${email} with upcoming events. Check your inbox!`);
             emailInput.value = '';
             
         } catch (error) {
