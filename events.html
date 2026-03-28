@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables */
         :root {
             --primary: #1a4b8c;
             --secondary: #f8b739;
@@ -42,7 +41,6 @@
             padding: 0 20px;
         }
 
-        /* Header */
         header {
             background: var(--light);
             padding: 20px 0;
@@ -92,41 +90,39 @@
             transform: translateX(-3px);
         }
 
-        /* Hero Section */
         .hero {
             background: linear-gradient(rgba(26, 75, 140, 0.9), rgba(26, 75, 140, 0.8)), url('https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 100px 0;
+            padding: 80px 0;
             text-align: center;
         }
 
         .hero h2 {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 42px;
+            margin-bottom: 15px;
         }
 
         .hero p {
-            font-size: 20px;
+            font-size: 18px;
             max-width: 700px;
             margin: 0 auto;
         }
 
-        /* Main Content */
         .main-content {
-            padding: 80px 0;
+            padding: 60px 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .section-title h2 {
-            font-size: 36px;
+            font-size: 32px;
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             position: relative;
             display: inline-block;
         }
@@ -134,11 +130,11 @@
         .section-title h2:after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 70px;
+            height: 3px;
             background-color: var(--secondary);
             border-radius: 2px;
         }
@@ -147,20 +143,19 @@
             max-width: 700px;
             margin: 0 auto;
             color: var(--text-color);
-            font-size: 18px;
+            font-size: 16px;
         }
 
-        /* Events Filter */
         .events-filter {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 40px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 12px 24px;
+            padding: 10px 22px;
             background: var(--card-bg);
             border: 2px solid var(--primary);
             border-radius: 50px;
@@ -175,17 +170,16 @@
             color: white;
         }
 
-        /* Events Grid */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             margin-bottom: 60px;
         }
 
         .event-card {
             background: var(--card-bg);
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -193,80 +187,81 @@
         }
 
         .event-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
         .event-card.featured {
-            border: 3px solid var(--secondary);
+            border: 2px solid var(--secondary);
         }
 
         .event-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: var(--secondary);
             color: var(--dark);
-            padding: 8px 15px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             z-index: 2;
         }
 
         .event-image {
-            height: 200px;
+            height: 180px;
             background-size: cover;
             background-position: center;
             position: relative;
         }
 
-        .event-date {
+        .event-date-badge {
             position: absolute;
             bottom: 0;
             left: 0;
             background: var(--primary);
             color: white;
-            padding: 15px;
+            padding: 10px 15px;
             text-align: center;
-            min-width: 80px;
+            min-width: 70px;
         }
 
-        .event-date .day {
-            font-size: 24px;
+        .event-date-badge .day {
+            font-size: 22px;
             font-weight: 700;
             display: block;
             line-height: 1;
         }
 
-        .event-date .month {
-            font-size: 14px;
+        .event-date-badge .month {
+            font-size: 12px;
             display: block;
         }
 
         .event-content {
-            padding: 25px;
+            padding: 20px;
         }
 
         .event-category {
             color: var(--accent);
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: block;
         }
 
         .event-title {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .event-meta {
             display: flex;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
 
@@ -274,29 +269,53 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 14px;
+            font-size: 13px;
+            color: var(--text-color);
         }
 
         .event-meta-item i {
             color: var(--primary);
+            width: 14px;
         }
 
         .event-description {
             color: var(--text-color);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        .event-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .calendar-section {
+            background: var(--light);
+            padding: 60px 0;
         }
 
-        .btn {
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .current-month {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Fixed Button Styles */
+        .btn-outline {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -304,59 +323,18 @@
             border-radius: 50px;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            background-color: transparent;
+            color: var(--primary);
             font-size: 14px;
             text-decoration: none;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            background-color: transparent;
-            color: var(--primary);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border-color: var(--primary);
         }
 
         .btn-outline:hover {
             background-color: var(--primary);
             color: white;
-        }
-
-        /* Calendar Section */
-        .calendar-section {
-            background: var(--light);
-            padding: 80px 0;
-            margin-top: 40px;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .current-month {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
+            transform: translateY(-2px);
         }
 
         .calendar-grid {
@@ -366,22 +344,28 @@
             background: #ddd;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .calendar-day-header {
             background: var(--primary);
             color: white;
-            padding: 15px;
+            padding: 14px;
             text-align: center;
             font-weight: 600;
+            font-size: 14px;
         }
 
         .calendar-day {
             background: var(--card-bg);
-            padding: 15px;
-            min-height: 120px;
-            border: 1px solid #eee;
+            padding: 12px;
+            min-height: 110px;
             position: relative;
+            transition: var(--transition);
+        }
+
+        .calendar-day:hover {
+            background: rgba(26, 75, 140, 0.05);
         }
 
         .calendar-day.empty {
@@ -393,26 +377,75 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--primary);
+            font-size: 16px;
         }
 
-        .calendar-event {
-            background: var(--accent);
+        .event-badge-calendar {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #1e5631);
             color: white;
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            margin-bottom: 3px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-top: 6px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            max-width: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        .calendar-event:hover {
-            background: var(--primary);
+        .event-badge-calendar:hover {
+            background: linear-gradient(135deg, var(--secondary), #e6a017);
+            transform: scale(1.02);
+            color: var(--dark);
         }
 
-        /* Timeline */
+        .event-badge-calendar.multiple {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+        }
+
+        .calendar-day {
+            position: relative;
+        }
+
+        .event-tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+
+        .event-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark) transparent transparent transparent;
+        }
+
+        .event-badge-calendar:hover + .event-tooltip,
+        .calendar-day:hover .event-tooltip {
+            visibility: visible;
+        }
+
         .upcoming-events {
             margin-top: 60px;
         }
@@ -424,8 +457,16 @@
 
         .timeline-item {
             display: flex;
-            margin-bottom: 30px;
-            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+            background: rgba(26, 75, 140, 0.03);
+            padding-left: 10px;
         }
 
         .timeline-date {
@@ -442,84 +483,112 @@
         }
 
         .timeline-month {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-color);
             text-transform: uppercase;
         }
 
         .timeline-content {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
             flex: 1;
         }
 
         .timeline-content h4 {
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 5px;
+            font-size: 16px;
         }
 
         .timeline-content p {
             color: var(--text-color);
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        /* Newsletter */
+        .timeline-category {
+            display: inline-block;
+            background: var(--light);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            margin-top: 5px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
         .newsletter-section {
             background: linear-gradient(135deg, var(--primary), #0d3a6b);
             color: white;
-            padding: 80px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
         .newsletter-content {
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
         .newsletter-form {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 10px;
+            margin-top: 25px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .newsletter-input {
             flex: 1;
-            min-width: 250px;
-            padding: 15px 20px;
+            min-width: 220px;
+            padding: 12px 20px;
             border: none;
             border-radius: 50px;
-            font-size: 16px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
         }
 
+        .newsletter-input:focus {
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+
+        /* Subscribe Button */
         .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary);
             background-color: var(--secondary);
             color: var(--dark);
-            border-color: var(--secondary);
+            font-size: 14px;
         }
 
-        /* Footer */
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
         footer {
             background-color: var(--footer-bg);
             color: white;
-            padding: 60px 0 30px;
+            padding: 50px 0 25px;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
         .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
+            font-size: 18px;
+            margin-bottom: 15px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .footer-column h3:after {
@@ -527,8 +596,8 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
-            height: 3px;
+            width: 40px;
+            height: 2px;
             background-color: var(--secondary);
         }
 
@@ -537,18 +606,19 @@
         }
 
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .footer-links a {
             color: #ddd;
             text-decoration: none;
             transition: var(--transition);
+            font-size: 13px;
         }
 
         .footer-links a:hover {
             color: var(--secondary);
-            padding-left: 5px;
+            padding-left: 3px;
         }
 
         .contact-info {
@@ -556,29 +626,30 @@
         }
 
         .contact-info li {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: flex;
             align-items: flex-start;
+            font-size: 13px;
         }
 
         .contact-info i {
-            margin-right: 10px;
+            margin-right: 8px;
             color: var(--secondary);
-            margin-top: 4px;
+            width: 16px;
         }
 
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 15px;
         }
 
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             color: white;
@@ -593,26 +664,35 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 30px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 14px;
+            font-size: 12px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in {
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary);
         }
 
         @media (max-width: 768px) {
-            .hero h2 { font-size: 32px; }
-            .calendar-day { min-height: 80px; padding: 8px; }
-            .calendar-event { font-size: 9px; }
+            .hero h2 { font-size: 28px; }
+            .calendar-day { min-height: 90px; padding: 8px; }
+            .day-number { font-size: 14px; }
+            .event-badge-calendar { font-size: 9px; padding: 2px 6px; }
             .timeline-item { flex-direction: column; }
-            .timeline-date { margin-bottom: 10px; text-align: left; }
+            .timeline-date { margin-bottom: 8px; text-align: left; width: auto; display: flex; gap: 8px; align-items: baseline; }
+            .timeline-day { font-size: 22px; }
+            .btn-outline, .btn-secondary { padding: 8px 16px; font-size: 12px; }
         }
     </style>
 </head>
@@ -642,7 +722,6 @@
 
     <main class="main-content">
         <div class="container">
-            <!-- Events Filter -->
             <div class="events-filter">
                 <button class="filter-btn active" data-filter="all">All Events</button>
                 <button class="filter-btn" data-filter="academic">Academic</button>
@@ -652,28 +731,24 @@
                 <button class="filter-btn" data-filter="featured">Featured</button>
             </div>
 
-            <!-- Events Grid -->
             <div class="events-grid" id="eventsGrid">
-                <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
-                    <i class="fas fa-spinner fa-spin"></i> Loading events...
-                </div>
+                <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading events...</div>
             </div>
 
-            <!-- Dynamic Calendar Section -->
             <section class="calendar-section">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Events Calendar</h2>
-                        <p>Click on any event to view details</p>
+                        <h2>📅 Events Calendar</h2>
+                        <p>Hover over any event badge to see details • Click to view all events for that day</p>
                     </div>
 
                     <div class="calendar-header">
                         <h3 class="current-month" id="currentMonth">March 2024</h3>
                         <div class="calendar-nav">
-                            <button class="btn btn-outline" id="prevMonthBtn">
+                            <button class="btn-outline" id="prevMonthBtn">
                                 <i class="fas fa-chevron-left"></i> Previous
                             </button>
-                            <button class="btn btn-outline" id="nextMonthBtn">
+                            <button class="btn-outline" id="nextMonthBtn">
                                 Next <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
@@ -685,24 +760,20 @@
                 </div>
             </section>
 
-            <!-- Dynamic Timeline -->
             <section class="upcoming-events">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Upcoming Events Timeline</h2>
+                        <h2>⭐ Upcoming Events</h2>
                         <p>Never miss an important campus event</p>
                     </div>
                     <div class="events-timeline" id="timelineContainer">
-                        <div style="text-align: center; padding: 40px;">
-                            <i class="fas fa-spinner fa-spin"></i> Loading timeline...
-                        </div>
+                        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading timeline...</div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Newsletter Section -->
     <section class="newsletter-section">
         <div class="container">
             <div class="newsletter-content">
@@ -710,7 +781,7 @@
                 <p>Subscribe to our events newsletter and never miss an important campus activity</p>
                 <form class="newsletter-form" id="newsletterForm">
                     <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn btn-secondary">
+                    <button type="submit" class="btn-secondary">
                         <i class="fas fa-paper-plane"></i> Subscribe
                     </button>
                 </form>
@@ -718,7 +789,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -755,12 +825,10 @@
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
             authDomain: "divine-grace-academy.firebaseapp.com",
@@ -770,62 +838,59 @@
             appId: "1:84424080855:web:0d2d58926ada950a101f92"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Global variables
         let allEvents = [];
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth();
         let currentYear = currentDate.getFullYear();
 
-        // Month names
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-        // Load all events from Firebase
         async function loadAllEvents() {
             try {
                 const querySnapshot = await db.collection('events').get();
                 allEvents = [];
                 querySnapshot.forEach(doc => {
-                    allEvents.push({ id: doc.id, ...doc.data() });
+                    const eventData = doc.data();
+                    if (eventData.date) {
+                        allEvents.push({ id: doc.id, ...eventData });
+                    }
                 });
                 
-                // Display events grid
                 displayEventsGrid();
-                
-                // Render calendar with current month
                 renderCalendar(currentYear, currentMonth);
-                
-                // Render timeline
                 renderTimeline();
                 
             } catch (error) {
-                console.error("Error loading events:", error);
-                document.getElementById('eventsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: red;">Error loading events</div>';
+                console.error("Error:", error);
+                document.getElementById('eventsGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: red;">Error loading events</div>';
             }
         }
 
-        // Display events grid
         function displayEventsGrid() {
             const eventsGrid = document.getElementById('eventsGrid');
             
             if (allEvents.length === 0) {
-                eventsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;">No events found. Add some in Firebase!</div>';
+                eventsGrid.innerHTML = '<div style="text-align: center; padding: 40px;">No events found.</div>';
                 return;
             }
 
             eventsGrid.innerHTML = '';
             
             allEvents.forEach(event => {
+                const eventDate = new Date(event.date);
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+                
                 const card = `
                     <div class="event-card ${event.featured ? 'featured' : ''}" data-category="${event.category || 'general'}">
-                        ${event.featured ? '<div class="event-badge">Featured</div>' : ''}
+                        ${event.featured ? '<div class="event-badge">⭐ Featured</div>' : ''}
                         <div class="event-image" style="background-image: url('${event.image || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}');">
-                            <div class="event-date">
-                                <span class="day">${event.day || event.date?.split('-')[2] || '15'}</span>
-                                <span class="month">${event.month || (event.date ? new Date(event.date).toLocaleString('default', { month: 'short' }).toUpperCase() : 'MAR')}</span>
+                            <div class="event-date-badge">
+                                <span class="day">${event.day || day}</span>
+                                <span class="month">${event.month || month}</span>
                             </div>
                         </div>
                         <div class="event-content">
@@ -836,22 +901,15 @@
                                 <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</div>
                             </div>
                             <p class="event-description">${event.description || 'No description available.'}</p>
-                            <div class="event-actions">
-                                <button class="btn btn-primary" onclick="alert('Added to calendar: ${event.title}')">
-                                    <i class="fas fa-calendar-plus"></i> Add to Calendar
-                                </button>
-                            </div>
                         </div>
                     </div>
                 `;
                 eventsGrid.innerHTML += card;
             });
             
-            // Attach filter listeners
             attachFilterListeners();
         }
 
-        // Filter functionality
         function attachFilterListeners() {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const eventCards = document.querySelectorAll('.event-card');
@@ -881,30 +939,37 @@
             });
         }
 
-        // Render calendar
+        function getEventsForDate(year, month, day) {
+            return allEvents.filter(event => {
+                if (!event.date) return false;
+                const eventDate = new Date(event.date);
+                return eventDate.getFullYear() === year && 
+                       eventDate.getMonth() === month && 
+                       eventDate.getDate() === day;
+            });
+        }
+
+        function showDayEvents(year, month, day) {
+            const events = getEventsForDate(year, month, day);
+            if (events.length === 0) return;
+            
+            let message = `📅 ${events.length} Event(s) for ${monthNames[month]} ${day}, ${year}:\n\n`;
+            events.forEach(event => {
+                message += `📌 ${event.title}\n   🕒 ${event.time || 'Time TBD'}\n   📍 ${event.location || 'Location TBD'}\n   🏷️ ${(event.category || 'General').toUpperCase()}\n\n`;
+            });
+            alert(message);
+        }
+
         function renderCalendar(year, month) {
             const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
             const startingDayOfWeek = firstDay.getDay();
-            const daysInMonth = lastDay.getDate();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
             
-            // Update header
             document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
             
-            // Get events for this month
-            const eventsThisMonth = allEvents.filter(event => {
-                if (event.date) {
-                    const eventDate = new Date(event.date);
-                    return eventDate.getMonth() === month && eventDate.getFullYear() === year;
-                }
-                return false;
-            });
-            
-            // Create calendar grid
             const calendarGrid = document.getElementById('calendarGrid');
             calendarGrid.innerHTML = '';
             
-            // Day headers
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             dayNames.forEach(day => {
                 const header = document.createElement('div');
@@ -913,14 +978,12 @@
                 calendarGrid.appendChild(header);
             });
             
-            // Empty cells for days before month starts
             for (let i = 0; i < startingDayOfWeek; i++) {
                 const emptyDay = document.createElement('div');
                 emptyDay.className = 'calendar-day empty';
                 calendarGrid.appendChild(emptyDay);
             }
             
-            // Fill in days of month
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayCell = document.createElement('div');
                 dayCell.className = 'calendar-day';
@@ -930,25 +993,50 @@
                 dayNumber.textContent = day;
                 dayCell.appendChild(dayNumber);
                 
-                // Add events for this day
-                const eventsOnDay = eventsThisMonth.filter(event => {
-                    const eventDay = new Date(event.date).getDate();
-                    return eventDay === day;
-                });
+                const eventsOnDay = getEventsForDate(year, month, day);
                 
-                eventsOnDay.forEach(event => {
-                    const eventBadge = document.createElement('div');
-                    eventBadge.className = 'calendar-event';
-                    eventBadge.textContent = event.title.length > 20 ? event.title.substring(0, 18) + '...' : event.title;
-                    eventBadge.title = event.title;
-                    eventBadge.onclick = () => alert(`${event.title}\n${event.time || 'Time TBD'}\n${event.location || 'Location TBD'}\n\n${event.description || ''}`);
-                    dayCell.appendChild(eventBadge);
-                });
+                if (eventsOnDay.length > 0) {
+                    const eventsContainer = document.createElement('div');
+                    eventsContainer.style.marginTop = '8px';
+                    
+                    const displayEvents = eventsOnDay.slice(0, 2);
+                    displayEvents.forEach(event => {
+                        const eventBadge = document.createElement('div');
+                        eventBadge.className = 'event-badge-calendar';
+                        const shortTitle = event.title.length > 20 ? event.title.substring(0, 18) + '...' : event.title;
+                        eventBadge.innerHTML = `<i class="fas fa-calendar-alt" style="font-size: 8px; margin-right: 4px;"></i> ${shortTitle}`;
+                        
+                        const tooltip = document.createElement('div');
+                        tooltip.className = 'event-tooltip';
+                        tooltip.innerHTML = `<strong>${event.title}</strong><br>🕒 ${event.time || 'Time TBD'}<br>📍 ${event.location || 'Location TBD'}`;
+                        eventBadge.appendChild(tooltip);
+                        
+                        eventBadge.onclick = (e) => {
+                            e.stopPropagation();
+                            alert(`📅 ${event.title}\n\n🕒 ${event.time || 'Time TBD'}\n📍 ${event.location || 'Location TBD'}\n\n📝 ${event.description || 'No description available.'}`);
+                        };
+                        eventsContainer.appendChild(eventBadge);
+                    });
+                    
+                    if (eventsOnDay.length > 2) {
+                        const moreBadge = document.createElement('div');
+                        moreBadge.className = 'event-badge-calendar multiple';
+                        moreBadge.innerHTML = `<i class="fas fa-plus-circle"></i> +${eventsOnDay.length - 2} more`;
+                        moreBadge.onclick = (e) => {
+                            e.stopPropagation();
+                            showDayEvents(year, month, day);
+                        };
+                        eventsContainer.appendChild(moreBadge);
+                    }
+                    
+                    dayCell.appendChild(eventsContainer);
+                    dayCell.style.cursor = 'pointer';
+                    dayCell.onclick = () => showDayEvents(year, month, day);
+                }
                 
                 calendarGrid.appendChild(dayCell);
             }
             
-            // Fill remaining cells
             const totalCells = startingDayOfWeek + daysInMonth;
             const remainingCells = 42 - totalCells;
             for (let i = 0; i < remainingCells; i++) {
@@ -958,13 +1046,11 @@
             }
         }
 
-        // Render timeline (all upcoming events)
         function renderTimeline() {
             const timelineContainer = document.getElementById('timelineContainer');
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             
-            // Filter events with valid dates that are today or future
             const upcomingEvents = allEvents
                 .filter(event => {
                     if (!event.date) return false;
@@ -972,10 +1058,10 @@
                     return eventDate >= today;
                 })
                 .sort((a, b) => new Date(a.date) - new Date(b.date))
-                .slice(0, 10); // Show top 10 upcoming events
+                .slice(0, 10);
             
             if (upcomingEvents.length === 0) {
-                timelineContainer.innerHTML = '<div style="text-align: center; padding: 40px;">No upcoming events scheduled.</div>';
+                timelineContainer.innerHTML = '<div style="text-align: center; padding: 40px;">✨ No upcoming events scheduled. Check back soon!</div>';
                 return;
             }
             
@@ -986,7 +1072,7 @@
                 const day = eventDate.getDate();
                 const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
                 
-                const timelineItem = `
+                timelineContainer.innerHTML += `
                     <div class="timeline-item">
                         <div class="timeline-date">
                             <div class="timeline-day">${event.day || day}</div>
@@ -994,16 +1080,14 @@
                         </div>
                         <div class="timeline-content">
                             <h4>${event.title || 'Untitled Event'}</h4>
-                            <p>${event.location || 'Location TBD'} • ${event.time || 'Time TBD'}</p>
-                            <p>${event.description ? event.description.substring(0, 100) + '...' : ''}</p>
+                            <p><i class="fas fa-clock"></i> ${event.time || 'Time TBD'} | <i class="fas fa-map-marker-alt"></i> ${event.location || 'Location TBD'}</p>
+                            <span class="timeline-category"><i class="fas fa-tag"></i> ${(event.category || 'General').charAt(0).toUpperCase() + (event.category || 'General').slice(1)}</span>
                         </div>
                     </div>
                 `;
-                timelineContainer.innerHTML += timelineItem;
             });
         }
 
-        // Month navigation
         function prevMonth() {
             currentMonth--;
             if (currentMonth < 0) {
@@ -1022,19 +1106,15 @@
             renderCalendar(currentYear, currentMonth);
         }
 
-        // Newsletter form
+        document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
+        document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
+        
         document.getElementById('newsletterForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = this.querySelector('.newsletter-input').value;
-            alert(`Thank you for subscribing with ${email}!`);
+            alert(`📧 Thank you for subscribing! You'll receive updates about campus events.`);
             this.reset();
         });
 
-        // Event listeners for month navigation
-        document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
-        document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
-
-        // Load everything on page load
         document.addEventListener('DOMContentLoaded', loadAllEvents);
     </script>
 </body>
