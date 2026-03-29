@@ -87,45 +87,9 @@
             transform: translateX(-3px);
         }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--dark);
-            transition: var(--transition);
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-toggle:hover {
-            background-color: rgba(0, 0, 0, 0.1);
-            transform: rotate(15deg);
-        }
-
-        .dark-mode .theme-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .theme-toggle .fa-sun {
-            display: none;
-        }
-
-        .dark-mode .theme-toggle .fa-moon {
-            display: none;
-        }
-
-        .dark-mode .theme-toggle .fa-sun {
-            display: block;
-            color: var(--secondary);
-        }
-
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(26, 75, 140, 0.9), rgba(26, 75, 140, 0.8)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background: linear-gradient(rgba(26, 75, 140, 0.3), rgba(26, 75, 140, 0.8)), url('https://images.pexels.com/photos/5256819/pexels-photo-5256819.jpeg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -430,6 +394,9 @@
         }
 
         .mission-vision .section-title h2 {
+            color: white;
+        }
+          .mission-vision .section-title p {
             color: white;
         }
 
