@@ -19,12 +19,6 @@
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Back to Home</a></li>
-                    <li>
-                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" style="display: none;">
-                            <i class="fas fa-moon"></i>
-                            <i class="fas fa-sun"></i>
-                        </button>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -50,7 +44,7 @@
             <div class="tour-options">
                 <!-- Individual Tour -->
                 <div class="tour-card">
-                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
                     <div class="tour-content">
                         <span class="tour-duration">60-90 minutes</span>
                         <h3>Individual Family Tour</h3>
@@ -66,7 +60,7 @@
 
                 <!-- Group Tour -->
                 <div class="tour-card">
-                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); "></div>
                     <div class="tour-content">
                         <span class="tour-duration">90 minutes</span>
                         <h3>Group Information Session</h3>
@@ -142,9 +136,9 @@
                                 <label for="tourType">Preferred Tour Type *</label>
                                 <select id="tourType" name="tourType" required>
                                     <option value="">Select Tour Type</option>
-                                    <option value="individual">Individual Family Tour</option>
-                                    <option value="group">Group Information Session</option>
-                                    <option value="virtual">Virtual Tour</option>
+                                    <option value="Individual Family Tour">Individual Family Tour</option>
+                                    <option value="Group Information Session">Group Information Session</option>
+                                    <option value="Virtual Tour">Virtual Tour</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -158,21 +152,21 @@
                                 <label for="preferredTime">Preferred Time *</label>
                                 <select id="preferredTime" name="preferredTime" required>
                                     <option value="">Select Time</option>
-                                    <option value="morning">Morning (9:00 AM - 11:00 AM)</option>
-                                    <option value="afternoon">Afternoon (1:00 PM - 3:00 PM)</option>
-                                    <option value="evening">Evening (5:00 PM - 7:00 PM)</option>
+                                    <option value="Morning (9:00 AM - 11:00 AM)">Morning (9:00 AM - 11:00 AM)</option>
+                                    <option value="Afternoon (1:00 PM - 3:00 PM)">Afternoon (1:00 PM - 3:00 PM)</option>
+                                    <option value="Evening (5:00 PM - 7:00 PM)">Evening (5:00 PM - 7:00 PM)</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="hearAbout">How did you hear about us? *</label>
                                 <select id="hearAbout" name="hearAbout" required>
                                     <option value="">Select Option</option>
-                                    <option value="friend">Friend/Family</option>
-                                    <option value="website">Website</option>
-                                    <option value="social">Social Media</option>
-                                    <option value="event">Community Event</option>
-                                    <option value="ad">Advertisement</option>
-                                    <option value="other">Other</option>
+                                    <option value="Friend/Family">Friend/Family</option>
+                                    <option value="Website">Website</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Community Event">Community Event</option>
+                                    <option value="Advertisement">Advertisement</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
@@ -308,7 +302,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Divine Grace Academy</h3>
-                    <p>Providing exceptional education in a nurturing environment since 1995. We are committed to developing the whole child - academically, socially, and emotionally.</p>
+                    <p>Providing exceptional education in a nurturing environment since 1995.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -316,54 +310,41 @@
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="academics.html">Academics</a></li>
-                        <li><a href="admissions.html">Admissions</a></li>
+                        <li><a href="events.html">Campus Events</a></li>
                         <li><a href="tour.html">Schedule a Tour</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-column">
                     <h3>Contact Info</h3>
                     <ul class="contact-info">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>123 Education Lane, Learning City, LC 12345</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>(555) 123-4567</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>admissions@divinegrace.edu</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
-                        </li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Learning City</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> admissions@divinegrace.edu</li>
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
-                <p>&copy; 2023 Divine Grace Academy. All rights reserved.</p>
+                <p>&copy; 2025 Divine Grace Academy. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase SDKs (v8 - simpler) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
-        // Your Firebase configuration
+        // Initialize EmailJS
+        emailjs.init("CwH05MhdjatUiDqNy");
+
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
             authDomain: "divine-grace-academy.firebaseapp.com",
@@ -372,18 +353,11 @@
             messagingSenderId: "84424080855",
             appId: "1:84424080855:web:0d2d58926ada950a101f92"
         };
-        
-        // Initialize Firebase
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         console.log("Tour page Firebase connected!");
-        
-        // Make db available for tour.js
-        window.db = db;
-    </script>
 
-    <!-- FAQ Toggle Script -->
-    <script>
         // FAQ Toggle Functionality
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
@@ -400,7 +374,7 @@
             dateInput.min = formattedDate;
         }
 
-        // Tour Form Submission
+        // Tour Form Submission with Email Confirmation
         const tourForm = document.getElementById('tourForm');
         
         if (tourForm) {
@@ -440,8 +414,24 @@
                     // Save to Firebase
                     await db.collection('tourRequests').add(formData);
                     
+                    // Send confirmation email via EmailJS
+                    const emailParams = {
+                        email: formData.email,
+                        first_name: formData.firstName,
+                        last_name: formData.lastName,
+                        preferred_date: formData.preferredDate,
+                        preferred_time: formData.preferredTime,
+                        tour_type: formData.tourType,
+                        student_name: formData.studentName,
+                        phone: formData.phone,
+                        questions: formData.questions || 'None',
+                        to_name: formData.firstName
+                    };
+                    
+                    await emailjs.send('service_vybn3ea', 'template_019vikq', emailParams);
+                    
                     // Success message
-                    alert('Thank you for your tour request! Our admissions team will contact you within 24-48 hours to confirm your tour details.');
+                    alert('✅ Tour request submitted successfully!\n\nA confirmation email has been sent to ' + formData.email + '. Our admissions team will contact you within 24-48 hours.');
                     
                     // Reset form
                     tourForm.reset();
@@ -450,8 +440,8 @@
                     document.getElementById('schedule-form').scrollIntoView({ behavior: 'smooth' });
                     
                 } catch (error) {
-                    console.error('Error saving tour request:', error);
-                    alert('There was an error submitting your request. Please try again or contact us directly.');
+                    console.error('Error:', error);
+                    alert('❌ There was an error submitting your request. Please try again or contact us directly.');
                 } finally {
                     // Restore button
                     submitBtn.textContent = originalText;

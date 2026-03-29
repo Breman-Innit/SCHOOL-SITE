@@ -3,6 +3,25 @@ let currentStep = 1;
 const totalSteps = 5;
 let formData = {};
 
+// Firebase and EmailJS Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCStWBZt502Xs2CWIEIZJdf4OL7eaI0Cr8",
+    authDomain: "divine-grace-academy.firebaseapp.com",
+    projectId: "divine-grace-academy",
+    storageBucket: "divine-grace-academy.firebasestorage.app",
+    messagingSenderId: "84424080855",
+    appId: "1:84424080855:web:0d2d58926ada950a101f92"
+};
+
+// Initialize Firebase
+if (typeof firebase !== 'undefined') {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// Initialize EmailJS
+emailjs.init("CwH05MhdjatUiDqNy");
+
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Application form initialized');
@@ -69,7 +88,6 @@ function updateChecklist() {
 function nextStep() {
     console.log('Next step clicked, current step:', currentStep);
     
-    // Validate current step before moving forward
     if (validateStep(currentStep)) {
         console.log('Validation passed, moving to step:', currentStep + 1);
         if (currentStep < totalSteps) {
@@ -77,7 +95,6 @@ function nextStep() {
         }
     } else {
         console.log('Validation failed');
-        // Shake the next button to indicate error
         shakeNextButton();
     }
 }
@@ -92,12 +109,10 @@ function prevStep() {
 function showStep(stepNumber) {
     console.log('Showing step:', stepNumber);
     
-    // Hide all steps
     document.querySelectorAll('.form-step').forEach(step => {
         step.classList.remove('active');
     });
     
-    // Show current step
     const currentStepElement = document.getElementById('step' + stepNumber);
     if (currentStepElement) {
         currentStepElement.classList.add('active');
@@ -110,11 +125,9 @@ function showStep(stepNumber) {
         console.error('Step element not found: step' + stepNumber);
     }
     
-    // Hide validation summary when changing steps
     hideValidationSummary();
 }
 
-// Shake animation for next button
 function shakeNextButton() {
     const nextButton = document.querySelector('.btn-primary');
     if (nextButton) {
@@ -125,13 +138,12 @@ function shakeNextButton() {
     }
 }
 
-// Validation Functions
+// Validation Functions (keep your existing validation functions - they're perfect!)
 function validateStep(step) {
     console.log('Validating step:', step);
     let isValid = true;
     const errors = [];
     
-    // Clear previous errors
     clearStepErrors(step);
     
     switch(step) {
@@ -183,7 +195,6 @@ function highlightRequiredFields(step) {
 function validateStep1(errors) {
     let isValid = true;
     
-    // Student Name Validation
     const studentName = document.getElementById('studentName');
     if (!studentName.value.trim() || studentName.value.trim().length < 2) {
         showError('studentName', 'Please enter student\'s full name');
@@ -193,7 +204,6 @@ function validateStep1(errors) {
         showSuccess('studentName');
     }
     
-    // Date of Birth Validation
     const studentDob = document.getElementById('studentDob');
     if (!studentDob.value) {
         showError('studentDob', 'Please select date of birth');
@@ -213,7 +223,6 @@ function validateStep1(errors) {
         }
     }
     
-    // Gender Validation
     const studentGender = document.getElementById('studentGender');
     if (!studentGender.value) {
         showError('studentGender', 'Please select gender');
@@ -223,7 +232,6 @@ function validateStep1(errors) {
         showSuccess('studentGender');
     }
     
-    // Grade Level Validation
     const gradeLevel = document.getElementById('gradeLevel');
     if (!gradeLevel.value) {
         showError('gradeLevel', 'Please select grade level');
@@ -239,7 +247,6 @@ function validateStep1(errors) {
 function validateStep2(errors) {
     let isValid = true;
     
-    // Parent Name Validation
     const parentName = document.getElementById('parentName');
     if (!parentName.value.trim() || parentName.value.trim().length < 2) {
         showError('parentName', 'Please enter parent/guardian name');
@@ -249,7 +256,6 @@ function validateStep2(errors) {
         showSuccess('parentName');
     }
     
-    // Email Validation
     const parentEmail = document.getElementById('parentEmail');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!parentEmail.value || !emailRegex.test(parentEmail.value)) {
@@ -260,9 +266,7 @@ function validateStep2(errors) {
         showSuccess('parentEmail');
     }
     
-    // Phone Validation
     const parentPhone = document.getElementById('parentPhone');
-    const phoneRegex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
     const phoneDigits = parentPhone.value.replace(/\D/g, '');
     if (!parentPhone.value || phoneDigits.length !== 10) {
         showError('parentPhone', 'Please enter a valid 10-digit phone number');
@@ -272,7 +276,6 @@ function validateStep2(errors) {
         showSuccess('parentPhone');
     }
     
-    // Relationship Validation
     const parentRelationship = document.getElementById('parentRelationship');
     if (!parentRelationship.value) {
         showError('parentRelationship', 'Please select relationship to student');
@@ -288,7 +291,6 @@ function validateStep2(errors) {
 function validateStep3(errors) {
     let isValid = true;
     
-    // Current School Validation
     const currentSchool = document.getElementById('currentSchool');
     if (!currentSchool.value.trim()) {
         showError('currentSchool', 'Please enter current school name');
@@ -298,7 +300,6 @@ function validateStep3(errors) {
         showSuccess('currentSchool');
     }
     
-    // Current Grade Validation
     const currentGrade = document.getElementById('currentGrade');
     if (!currentGrade.value.trim()) {
         showError('currentGrade', 'Please enter current grade level');
@@ -312,14 +313,12 @@ function validateStep3(errors) {
 }
 
 function validateStep4(errors) {
-    // Step 4 fields are optional, so always valid
     return true;
 }
 
 function validateStep5(errors) {
     let isValid = true;
     
-    // Hear About Us Validation
     const hearAbout = document.getElementById('hearAbout');
     if (!hearAbout.value) {
         showError('hearAbout', 'Please select how you heard about us');
@@ -329,7 +328,6 @@ function validateStep5(errors) {
         showSuccess('hearAbout');
     }
     
-    // Terms Agreement Validation
     const agreeTerms = document.getElementById('agreeTerms');
     if (!agreeTerms.checked) {
         showError('agreeTerms', 'You must certify that the information is accurate');
@@ -339,7 +337,6 @@ function validateStep5(errors) {
         showSuccess('agreeTerms');
     }
     
-    // Privacy Agreement Validation
     const agreePrivacy = document.getElementById('agreePrivacy');
     if (!agreePrivacy.checked) {
         showError('agreePrivacy', 'You must agree to the privacy policy');
@@ -361,7 +358,6 @@ function showError(fieldId, message) {
         field.classList.add('error');
         field.classList.remove('success');
         
-        // Add focus to the first error field
         if (!document.querySelector('.error:focus')) {
             field.focus();
         }
@@ -414,24 +410,18 @@ function showValidationSummary(errors) {
                 errorsList.appendChild(li);
             });
             summary.style.display = 'block';
-            
-            // Scroll to validation summary
             summary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            
-            // Show alert message for better visibility
             showAlertMessage(`Please fill in ${errors.length} required field(s) before continuing`);
         }
     }
 }
 
 function showAlertMessage(message) {
-    // Remove existing alert if any
     const existingAlert = document.querySelector('.validation-alert');
     if (existingAlert) {
         existingAlert.remove();
     }
     
-    // Create alert message
     const alert = document.createElement('div');
     alert.className = 'validation-alert';
     alert.innerHTML = `
@@ -455,7 +445,6 @@ function showAlertMessage(message) {
     
     document.body.appendChild(alert);
     
-    // Auto remove after 4 seconds
     setTimeout(() => {
         alert.remove();
     }, 4000);
@@ -487,7 +476,6 @@ function loadProgress() {
             const progressData = JSON.parse(saved);
             currentStep = progressData.currentStep || 1;
             
-            // Restore form data
             if (progressData.formData) {
                 restoreFormData(progressData.formData);
             }
@@ -538,26 +526,87 @@ function clearSavedProgress() {
     localStorage.removeItem('divineGraceApplication');
 }
 
-// Form Submission
-function submitApplication() {
+// ===========================================
+// UPDATED FORM SUBMISSION - SAVES TO FIREBASE & SENDS EMAIL
+// ===========================================
+async function submitApplication() {
     console.log('Submitting application');
     if (validateStep(5)) {
         // Collect final form data
         const finalData = collectFormData();
         
-        // In a real application, you would send this to a server
-        // For now, we'll just show success and save to localStorage
-        finalData.submittedAt = new Date().toISOString();
-        finalData.applicationId = 'DGA-' + Date.now();
+        // Generate application ID
+        const appId = 'DGA-' + new Date().getFullYear() + '-' + Date.now().toString().slice(-6);
         
-        // Save the final submission
-        localStorage.setItem('divineGraceApplicationSubmitted', JSON.stringify(finalData));
+        // Prepare data for Firebase
+        const applicationData = {
+            applicationId: appId,
+            studentName: finalData.studentName || '',
+            studentDob: finalData.studentDob || '',
+            studentGender: finalData.studentGender || '',
+            gradeLevel: finalData.gradeLevel || '',
+            parentName: finalData.parentName || '',
+            parentEmail: finalData.parentEmail || '',
+            parentPhone: finalData.parentPhone || '',
+            parentRelationship: finalData.parentRelationship || '',
+            currentSchool: finalData.currentSchool || '',
+            currentGrade: finalData.currentGrade || '',
+            previousSchools: finalData.previousSchools || '',
+            specialNeeds: finalData.specialNeeds || '',
+            medicalConditions: finalData.medicalConditions || '',
+            allergies: finalData.allergies || '',
+            hearAbout: finalData.hearAbout || '',
+            agreeTerms: finalData.agreeTerms || false,
+            agreePrivacy: finalData.agreePrivacy || false,
+            status: 'pending',
+            submittedAt: new Date().toISOString(),
+            submittedDate: new Date().toLocaleDateString()
+        };
         
-        // Clear the in-progress data
-        clearSavedProgress();
+        // Show loading state on submit button
+        const submitBtn = document.querySelector('#step5 .btn-primary');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.disabled = true;
         
-        // Show success message
-        showSuccessMessage(finalData.applicationId);
+        try {
+            // Save to Firebase
+            await db.collection('applications').add(applicationData);
+            
+            // Send confirmation email
+            const emailParams = {
+                parent_email: applicationData.parentEmail,
+                parent_name: applicationData.parentName,
+                student_name: applicationData.studentName,
+                student_dob: applicationData.studentDob,
+                grade_level: applicationData.gradeLevel,
+                current_school: applicationData.currentSchool,
+                application_id: appId,
+                submitted_date: applicationData.submittedDate,
+                to_name: applicationData.parentName.split(' ')[0]
+            };
+            
+            await emailjs.send('service_vybn3ea', 'YOUR_APPLICATION_TEMPLATE_ID', emailParams);
+            
+            // Save to localStorage for backup
+            finalData.submittedAt = new Date().toISOString();
+            finalData.applicationId = appId;
+            localStorage.setItem('divineGraceApplicationSubmitted', JSON.stringify(finalData));
+            
+            // Clear in-progress data
+            clearSavedProgress();
+            
+            // Show success message
+            showSuccessMessage(appId);
+            
+        } catch (error) {
+            console.error('Error submitting application:', error);
+            alert('There was an error submitting your application. Please try again or contact the admissions office.');
+        } finally {
+            // Restore button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     } else {
         shakeNextButton();
     }
@@ -570,20 +619,19 @@ function showSuccessMessage(applicationId) {
     
     if (form && successMessage && applicationIdElement) {
         form.style.display = 'none';
-        document.getElementById('checklist').style.display = 'none';
-        document.getElementById('validationSummary').style.display = 'none';
+        const checklist = document.getElementById('checklist');
+        const validationSummary = document.getElementById('validationSummary');
+        if (checklist) checklist.style.display = 'none';
+        if (validationSummary) validationSummary.style.display = 'none';
         applicationIdElement.textContent = applicationId;
         successMessage.style.display = 'block';
-        
-        // Scroll to success message
         successMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 
-// Real-time validation for better UX
+// Real-time validation
 document.addEventListener('input', function(e) {
     if (e.target.type !== 'checkbox') {
-        // Clear error when user starts typing
         const field = e.target;
         if (field.classList.contains('error')) {
             field.classList.remove('error');
