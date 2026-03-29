@@ -392,20 +392,27 @@ if (newsletterForm) {
                 status: 'active'
             });
             
-            // Fetch ALL events from Firebase
+            // ✅ FETCH ONLY UPCOMING EVENTS (today and future)
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             const eventsSnapshot = await db.collection('events').get();
-            const allEventsList = [];
+            const upcomingEventsList = [];
             
             eventsSnapshot.forEach(doc => {
                 const event = doc.data();
                 if (event.date) {
-                    allEventsList.push(event);
+                    const eventDate = new Date(event.date);
+                    // Only include events that are TODAY or in the FUTURE
+                    if (eventDate >= today) {
+                        upcomingEventsList.push(event);
+                    }
                 }
             });
             
-            // Sort by date and take first 3
-            allEventsList.sort((a, b) => new Date(a.date) - new Date(b.date));
-            const topEvents = allEventsList.slice(0, 3);
+            // Sort by date (closest first) and take first 3
+            upcomingEventsList.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const topEvents = upcomingEventsList.slice(0, 3);
             
             // Build events HTML
             let eventsHTML = '';
@@ -422,7 +429,7 @@ if (newsletterForm) {
                     `;
                 });
             } else {
-                eventsHTML = '<p style="color: #666;">✨ No events scheduled yet. Check back soon!</p>';
+                eventsHTML = '<p style="color: #666;">✨ No upcoming events scheduled yet. Check back soon!</p>';
             }
             
             // Build full email HTML
@@ -437,8 +444,8 @@ if (newsletterForm) {
                         .header h1 { margin: 0; font-size: 28px; }
                         .header p { margin: 5px 0 0; opacity: 0.9; }
                         .content { padding: 30px 25px; }
-                        .welcome { background: #f5f1f120; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
-                        .button { background: #f8b739; color: #f5f5f5;; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
+                        .welcome { background: #f8b73920; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
+                        .button { background: #f8b739; color: #333; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
                         .footer { background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; }
                         .footer a { color: #1a4b8c; text-decoration: none; }
                         .divider { height: 2px; background: linear-gradient(to right, #f8b739, #1a4b8c); margin: 20px 0; }
@@ -457,7 +464,7 @@ if (newsletterForm) {
                                 <p>Thank you for subscribing to the Divine Grace Academy newsletter! We're excited to keep you updated on all the amazing things happening at our school.</p>
                             </div>
                             
-                            <h3>📅 Featured Events</h3>
+                            <h3>📅 Upcoming Events</h3>
                             ${eventsHTML}
                             
                             <div class="divider"></div>
