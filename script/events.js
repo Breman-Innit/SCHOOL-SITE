@@ -432,69 +432,66 @@ if (newsletterForm) {
                 eventsHTML = '<p style="color: #666;">✨ No upcoming events scheduled yet. Check back soon!</p>';
             }
             
-            // Build full email HTML
-            const emailHTML = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <style>
-                        body { font-family: 'Poppins', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-                        .container { max-width: 600px; margin: 0 auto; background: #fff; }
-                        .header { background: linear-gradient(135deg, #1a4b8c, #0d3a6b); color: white; padding: 30px 20px; text-align: center; }
-                        .header h1 { margin: 0; font-size: 28px; }
-                        .header p { margin: 5px 0 0; opacity: 0.9; }
-                        .content { padding: 30px 25px; }
-                        .welcome { background: #f8b73920; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
-                        .button { background: #f8b739; color: #333; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
-                        .footer { background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; }
-                        .footer a { color: #1a4b8c; text-decoration: none; }
-                        .divider { height: 2px; background: linear-gradient(to right, #f8b739, #1a4b8c); margin: 20px 0; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h1>🎓 Divine Grace Academy</h1>
-                            <p>Excellence in Education | With God All Things Are Possible</p>
-                        </div>
-                        
-                        <div class="content">
-                            <div class="welcome">
-                                <h3>👋 Hello ${email.split('@')[0]}!</h3>
-                                <p>Thank you for subscribing to the Divine Grace Academy newsletter! We're excited to keep you updated on all the amazing things happening at our school.</p>
-                            </div>
-                            
-                            <h3>📅 Upcoming Events</h3>
-                            ${eventsHTML}
-                            
-                            <div class="divider"></div>
-                            
-                            <p style="text-align: center;">
-                                <a href="https://breman-innit.github.io/SCHOOL-SITE/events.html" class="button">📖 View All Events</a>
-                            </p>
-                            
-                            <p><strong>What to expect:</strong></p>
-                            <ul>
-                                <li>⭐ Monthly event updates</li>
-                                <li>🏆 Student achievement highlights</li>
-                                <li>📢 Important school announcements</li>
-                                <li>🎉 Community news and celebrations</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="footer">
-                            <p>Divine Grace Academy<br>
-                            3rd October Junction, Ashalaja</p>
-                            <p>
-                                <a href="https://breman-innit.github.io/SCHOOL-SITE/unsubscribe.html?email=${email}">Unsubscribe</a> | 
-                                <a href="https://breman-innit.github.io/SCHOOL-SITE">Visit our website</a>
-                            </p>
-                            <p>© 2025 Divine Grace Academy. All rights reserved.</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `;
+        // Build full email HTML
+const emailHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: 'Poppins', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+            .container { max-width: 600px; margin: 0 auto; background: #fff; }
+            .content { padding: 30px 25px; }
+            .welcome { background: #f8b73920; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
+            .button { background: #f8b739; color: #333; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
+            .footer { background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; }
+            .footer a { color: #1a4b8c; text-decoration: none; }
+            .divider { height: 2px; background: linear-gradient(to right, #f8b739, #1a4b8c); margin: 20px 0; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header" style="background: linear-gradient(135deg, #1a4b8c, #0d3a6b); padding: 30px 20px; text-align: center;">
+                <h1 style="margin: 0; font-size: 28px; color: #ffffff;">🎓 Divine Grace Academy</h1>
+                <p style="margin: 5px 0 0; opacity: 0.9; color: #ffffff;">Excellence in Education | With God All Things Are Possible</p>
+            </div>
+            
+            <div class="content">
+                <div class="welcome">
+                    <h3>👋 Hello ${email.split('@')[0]}!</h3>
+                    <p>Thank you for subscribing to the Divine Grace Academy newsletter! We're excited to keep you updated on all the amazing things happening at our school.</p>
+                </div>
+                
+                <h3>📅 Upcoming Events</h3>
+                ${eventsHTML}
+                
+                <div class="divider"></div>
+                
+                <p style="text-align: center;">
+                    <a href="https://breman-innit.github.io/SCHOOL-SITE/events.html" class="button">📖 View All Events</a>
+                </p>
+                
+                <p><strong>What to expect:</strong></p>
+                <ul>
+                    <li>⭐ Monthly event updates</li>
+                    <li>🏆 Student achievement highlights</li>
+                    <li>📢 Important school announcements</li>
+                    <li>🎉 Community news and celebrations</li>
+                </ul>
+            </div>
+            
+            <div class="footer">
+                <p>Divine Grace Academy<br>
+                3rd October Junction, Ashalaja</p>
+                <p>
+                    <a href="https://breman-innit.github.io/SCHOOL-SITE/unsubscribe.html?email=${email}">Unsubscribe</a> | 
+                    <a href="https://breman-innit.github.io/SCHOOL-SITE">Visit our website</a>
+                </p>
+                <p>© 2025 Divine Grace Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+`;
             
             // Send welcome email
             const templateParams = {
