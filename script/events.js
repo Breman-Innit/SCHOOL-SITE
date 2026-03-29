@@ -494,7 +494,7 @@ if (newsletterForm) {
                 email: email,
                 to_name: email.split('@')[0],
                 from_name: 'Divine Grace Academy',
-                reply_to: 'divinegraceacademycommunity@gmail.com',
+                reply_to: 'noreply@divinegraceacademy.com',
                 html_message: emailHTML
             };
             
