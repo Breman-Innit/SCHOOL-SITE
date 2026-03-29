@@ -437,8 +437,8 @@ if (newsletterForm) {
                         .header h1 { margin: 0; font-size: 28px; }
                         .header p { margin: 5px 0 0; opacity: 0.9; }
                         .content { padding: 30px 25px; }
-                        .welcome { background: #f8b73920; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
-                        .button { background: #f8b739; color: #333; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
+                        .welcome { background: #f5f1f120; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #f8b739; }
+                        .button { background: #f8b739; color: #f5f5f5;; padding: 12px 25px; text-decoration: none; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: 600; }
                         .footer { background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; }
                         .footer a { color: #1a4b8c; text-decoration: none; }
                         .divider { height: 2px; background: linear-gradient(to right, #f8b739, #1a4b8c); margin: 20px 0; }
@@ -494,7 +494,7 @@ if (newsletterForm) {
                 email: email,
                 to_name: email.split('@')[0],
                 from_name: 'Divine Grace Academy',
-                reply_to: 'noreply@divinegraceacademy.com',
+                reply_to: 'divinegraceacademycommunity@gmail.com',
                 html_message: emailHTML
             };
             
